@@ -10,8 +10,10 @@ public class main {
     Inventario estoque = new Inventario();
      
     fermento fermento = new fermento(100, 0,"fermento");
+    malte malte = new malte(200,1,"malte");
 
     estoque.adicionarItem(fermento);
+    estoque.adicionarItem(malte);
 
     estoque.listarItens();
     

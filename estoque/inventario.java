@@ -26,6 +26,7 @@ public class Inventario {
     
    }
 
+
    public void adicionarCerveja(cervejaArtesanal cerveja){
     cervejas.add(cerveja);
    }
