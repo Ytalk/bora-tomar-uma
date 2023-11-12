@@ -7,15 +7,18 @@ public class main {
   public static void main(String[] args) {
     
 
-    Inventario estoque = new Inventario();
+    //Inventario estoque = new Inventario();
      
-    fermento fermento = new fermento(100, 0,"fermento");
-    malte malte = new malte(200,1,"malte");
+    //fermento fermento = new fermento(100, 0,"fermento");
+    //malte malte = new malte(200,1,"malte");
 
-    estoque.adicionarItem(fermento);
-    estoque.adicionarItem(malte);
+    //estoque.adicionarItem(fermento);
+    //estoque.adicionarItem(malte);
 
-    estoque.listarItens();
+    //estoque.listarItens();
+    
+    GUI tela = new GUI();
+
     
    
   }
