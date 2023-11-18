@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -20,10 +21,13 @@ import estoque.*;
 
 public class GUI extends JFrame{
  Inventario estoque = new Inventario();
- String[] itens = {"MALTE,ÁGUA,FERMENTO"};
+ String[] itens = {"FERMENTO","ÁGUA"};//
  JList<String> lista_loja = new JList<>(itens);
  JList<String> lista_estoque = new JList<>(itens);
  JList<String> lista_receita = new JList<>(itens);
+ JLabel titulo_loja = new JLabel("LOJA");
+ JButton botao_comprar = new JButton("COMPRAR");
+
 
     
  public GUI (){
@@ -35,8 +39,6 @@ public class GUI extends JFrame{
         setLocationRelativeTo(null); // abrir no centro da tela
         setLayout(null);
         
-
-
 
         JButton botao_inventario = new JButton("INVENTÁRIO");
         botao_inventario.setFont(new Font("Arial",Font.CENTER_BASELINE,15));
@@ -62,11 +64,10 @@ public class GUI extends JFrame{
         //add(botao_criar);
 
 
-        botao_inventario.addActionListener(this::addAgua);
-        botao_receitas.addActionListener(this::addMalte);
+       // botao_inventario.addActionListener(this::addAgua);
+       // botao_receitas.addActionListener(this::addMalte);
         botao_loja.addActionListener(this::abrirLoja);
         
-
 
         JPanel menu_lateral = new JPanel();
         menu_lateral.setLayout(new GridLayout(3,1));
@@ -76,8 +77,6 @@ public class GUI extends JFrame{
         menu_lateral.add(botao_receitas);
         menu_lateral.add(botao_loja);
  
-
-        
         lista_receita.setBounds(400,200,250,100);
         add(lista_receita);
         lista_receita.setVisible(false);
@@ -85,18 +84,26 @@ public class GUI extends JFrame{
         lista_estoque.setBounds(400,200,250,100);
         add(lista_estoque);
         lista_estoque.setVisible(false);
-        
-        
 
         lista_loja.setBounds(400,200,250,100);
         add(lista_loja);
         lista_loja.setVisible(false);
          
 
+       
+       titulo_loja.setBounds(500,80,90,50);
+       titulo_loja.setFont(new Font("Arial",Font.CENTER_BASELINE,15));
+       add(titulo_loja);
+       titulo_loja.setVisible(false);
+
+       botao_comprar.setBounds(650,200,120,50);
+       botao_comprar.setFont(new Font("Arial",Font.CENTER_BASELINE,15));
+       add(botao_comprar);
+       botao_comprar.setVisible(false);
+
+    
 
     }
-
-
 
     public void addAgua(ActionEvent e){
      
@@ -112,14 +119,21 @@ public class GUI extends JFrame{
     }
     
     public void abrirLoja(ActionEvent e){
-        
-     
-     
+             
      lista_loja.setVisible(true);
+     titulo_loja.setVisible(true);
+     botao_comprar.setVisible(true);
+ 
+
+     
+  
+    
+ }
+}
 
         
     
-    }
+    
     
 
-}
+
