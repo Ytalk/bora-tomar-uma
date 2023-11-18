@@ -1,4 +1,4 @@
-package src;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
+import javax.swing.event.ListSelectionListener;
 
 import estoque.*;
 
@@ -21,11 +22,12 @@ import estoque.*;
 
 public class GUI extends JFrame{
  Inventario estoque = new Inventario();
- String[] itens = {"FERMENTO","ÁGUA"};//
+ String[] itens = {"ÁGUA","MALTE","LÚPULO","FERMENTO"};//
  JList<String> lista_loja = new JList<>(itens);
- JList<String> lista_estoque = new JList<>(itens);
+ JList<String> lista_estoque; 
  JList<String> lista_receita = new JList<>(itens);
  JLabel titulo_loja = new JLabel("LOJA");
+ JLabel titulo_estoque = new JLabel("ESTOQUE");
  JButton botao_comprar = new JButton("COMPRAR");
 
 
@@ -67,6 +69,7 @@ public class GUI extends JFrame{
        // botao_inventario.addActionListener(this::addAgua);
        // botao_receitas.addActionListener(this::addMalte);
         botao_loja.addActionListener(this::abrirLoja);
+        botao_inventario.addActionListener(this::abrirEstoque);
         
 
         JPanel menu_lateral = new JPanel();
@@ -81,15 +84,25 @@ public class GUI extends JFrame{
         add(lista_receita);
         lista_receita.setVisible(false);
 
+
+        lista_estoque = new JList<>(estoque.listarItens());
         lista_estoque.setBounds(400,200,250,100);
         add(lista_estoque);
         lista_estoque.setVisible(false);
 
+        titulo_estoque.setBounds(500,80,90,50);
+        titulo_estoque.setFont(new Font("Arial",Font.CENTER_BASELINE,15));
+        add(titulo_estoque);
+        titulo_estoque.setVisible(false);
+        
+        
+        
+        
+        
         lista_loja.setBounds(400,200,250,100);
         add(lista_loja);
         lista_loja.setVisible(false);
          
-
        
        titulo_loja.setBounds(500,80,90,50);
        titulo_loja.setFont(new Font("Arial",Font.CENTER_BASELINE,15));
@@ -100,21 +113,13 @@ public class GUI extends JFrame{
        botao_comprar.setFont(new Font("Arial",Font.CENTER_BASELINE,15));
        add(botao_comprar);
        botao_comprar.setVisible(false);
-
+       botao_comprar.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            comprarItem();
+        }
+    });
     
-
-    }
-
-    public void addAgua(ActionEvent e){
-     
-        agua agua = new agua(100, 0,"agua");
-        estoque.adicionarItem(agua);
-     
-    }
-
-    public void addMalte(ActionEvent e){
-        malte malte = new malte(200,1,"malte");
-        estoque.adicionarItem(malte);
 
     }
     
@@ -123,12 +128,65 @@ public class GUI extends JFrame{
      lista_loja.setVisible(true);
      titulo_loja.setVisible(true);
      botao_comprar.setVisible(true);
+    
+        lista_estoque.setVisible(false);
+        titulo_estoque.setVisible(false);
+    }
+
+     public void abrirEstoque(ActionEvent e){
+
+
+        lista_loja.setVisible(false);
+        titulo_loja.setVisible(false);
+        botao_comprar.setVisible(false);
+
+        lista_estoque.setVisible(true);
+        titulo_estoque.setVisible(true);
+        lista_estoque.setListData(estoque.listarItens());
+    }
+
+     private void comprarItem() {
+        
+        int indexSelecionado = lista_loja.getSelectedIndex();
+
+        if (indexSelecionado != -1) {
+            String itemSelecionado = itens[indexSelecionado];
+
+            materiaPrima materiaPrima = criarMateriaPrima(itemSelecionado);
+
+            estoque.adicionarItem(materiaPrima);
+
+            // Agora você pode fazer algo com o item selecionado, por exemplo, exibir uma mensagem
+            JOptionPane.showMessageDialog(this, "Você comprou: " + itemSelecionado);
+        } else {
+            // Caso nenhum item esteja selecionado
+            JOptionPane.showMessageDialog(this, "Selecione um item antes de comprar");
+        }  
+ }
+
  
 
-     
-  
-    
- }
+ private materiaPrima criarMateriaPrima(String tipo) {
+    // Lógica para criar e retornar uma instância da classe MateriaPrima desejada
+    // Aqui você pode ter um switch ou if-else para determinar o tipo e criar o objeto correspondente
+    switch (tipo) {
+        case "ÁGUA":
+            return new agua(100,10,"Água");
+        case "MALTE":
+            return new malte(200,20,"Malte");
+        case "LÚPULO":
+            return new lupulo(300,15,"Lupulo");
+        // Adicione outros casos conforme necessário
+        case "FERMENTO":
+        return new fermento(400, 25, "Fermento");
+        
+        default:
+            throw new IllegalArgumentException("Tipo de matéria-prima desconhecido: " + tipo);
+    }
+}
+
+
+
 }
 
         

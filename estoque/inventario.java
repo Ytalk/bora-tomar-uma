@@ -17,14 +17,15 @@ public class Inventario {
     materias.add(item);
    }
 
-   public void listarItens(){
-    
-    for(materiaPrima item : materias ){
-        System.out.println(item);
+    public String[] listarItens() {
+        String[] itens = new String[materias.size()];
 
+        for (int i = 0; i < materias.size(); i++) {
+            itens[i] = materias.get(i).getDesc(); // Supondo que sua classe materiaPrima tem um método getNome()
+        }
+
+        return itens;
     }
-    
-   }
 
 
    public void adicionarCerveja(cervejaArtesanal cerveja){

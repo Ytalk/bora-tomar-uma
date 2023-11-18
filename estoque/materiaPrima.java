@@ -12,7 +12,10 @@ public abstract class materiaPrima {
     this.desc = desc;
  }
 
- 
+   public String getDesc() {
+       return desc;
+   }
+
  public String toString(){
    return "PREÇO: " + custo + "R$" + "PESO: " + peso + "g " + desc;
   }
