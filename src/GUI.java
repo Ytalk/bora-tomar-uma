@@ -21,7 +21,9 @@ import estoque.*;
 public class GUI extends JFrame{
  Inventario estoque = new Inventario();
  String[] itens = {"MALTE,ÁGUA,FERMENTO"};
- JList<String> lista = new JList<>(itens);
+ JList<String> lista_loja = new JList<>(itens);
+ JList<String> lista_estoque = new JList<>(itens);
+ JList<String> lista_receita = new JList<>(itens);
 
     
  public GUI (){
@@ -76,12 +78,19 @@ public class GUI extends JFrame{
  
 
         
+        lista_receita.setBounds(400,200,250,100);
+        add(lista_receita);
+        lista_receita.setVisible(false);
+
+        lista_estoque.setBounds(400,200,250,100);
+        add(lista_estoque);
+        lista_estoque.setVisible(false);
         
         
 
-        lista.setBounds(400,200,250,100);
-        add(lista);
-        lista.setVisible(false);
+        lista_loja.setBounds(400,200,250,100);
+        add(lista_loja);
+        lista_loja.setVisible(false);
          
 
 
@@ -104,7 +113,9 @@ public class GUI extends JFrame{
     
     public void abrirLoja(ActionEvent e){
         
-    lista.setVisible(true);
+     
+     
+     lista_loja.setVisible(true);
 
         
     
