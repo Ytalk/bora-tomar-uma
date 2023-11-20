@@ -175,7 +175,7 @@ public class GUI extends JFrame{
         lista_estoque.setVisible(false);
         titulo_estoque.setVisible(false);
 
-        lista_receita.setVisible(true);
+        lista_receita.setVisible(false);
 
     }
 
