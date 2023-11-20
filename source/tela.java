@@ -1,4 +1,4 @@
-
+package source;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -21,8 +21,8 @@ import estoque.*;
 
 
 
-public class GUI extends JFrame{
- Inventario estoque = new Inventario();
+public class tela extends JFrame{
+ inventario estoque = new inventario();
  String[] itens = {"ÁGUA","MALTE","LÚPULO","FERMENTO"};//
  JList<String> lista_loja = new JList<>(itens);
  JList<String> lista_estoque; 
@@ -34,7 +34,7 @@ public class GUI extends JFrame{
 
 
     
- public GUI (){
+ public tela (){
 
         setVisible(true); 
         setSize(800,500);

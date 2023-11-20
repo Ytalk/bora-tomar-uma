@@ -3,13 +3,13 @@ package estoque;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Inventario {
+public class inventario {
     
     
     private ArrayList <materiaPrima> materias;
     private ArrayList <cervejaArtesanal> cervejas;
     
-   public Inventario(){
+   public inventario(){
     this.materias = new ArrayList<materiaPrima>();
     this.cervejas = new ArrayList<cervejaArtesanal>();
    }
