@@ -1,6 +1,7 @@
 package estoque;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Inventario {
     
@@ -25,6 +26,10 @@ public class Inventario {
         }
 
         return itens;
+    }
+
+    public List<materiaPrima> getMaterias() {
+        return materias;
     }
 
 

@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
+import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import estoque.*;
@@ -25,9 +26,10 @@ public class GUI extends JFrame{
  String[] itens = {"ÁGUA","MALTE","LÚPULO","FERMENTO"};//
  JList<String> lista_loja = new JList<>(itens);
  JList<String> lista_estoque; 
- JList<String> lista_receita = new JList<>(itens);
+ JList<String> lista_receita = new JList<>(itens);;
  JLabel titulo_loja = new JLabel("LOJA");
  JLabel titulo_estoque = new JLabel("ESTOQUE");
+ JPanel itemDetalhes = new JPanel();
  JButton botao_comprar = new JButton("COMPRAR");
 
 
@@ -47,7 +49,7 @@ public class GUI extends JFrame{
         botao_inventario.setBounds(100, 200 ,250, 70);
         botao_inventario.setForeground(new Color(237,241,238 ));
         botao_inventario.setBackground(new Color(0,0,0 ));
-        //add(botao_agua);
+        
 
 
         JButton botao_receitas = new JButton("RECEITAS");
@@ -55,7 +57,7 @@ public class GUI extends JFrame{
         botao_receitas.setBounds(400, 200 ,250, 70);
         botao_receitas.setForeground(new Color(237,241,238 ));
         botao_receitas.setBackground(new Color(0,0,0 ));
-        //add(botao_malte);
+        
 
 
         JButton botao_loja = new JButton("LOJA");
@@ -63,13 +65,12 @@ public class GUI extends JFrame{
         botao_loja.setBounds(250, 300 ,250, 70);
         botao_loja.setForeground(new Color(237,241,238 ));
         botao_loja.setBackground(new Color(0,0,0 ));
-        //add(botao_criar);
-
-
-       // botao_inventario.addActionListener(this::addAgua);
-       // botao_receitas.addActionListener(this::addMalte);
+        
+       
+       
         botao_loja.addActionListener(this::abrirLoja);
         botao_inventario.addActionListener(this::abrirEstoque);
+        botao_receitas.addActionListener(this::abrirReceitas);
         
 
         JPanel menu_lateral = new JPanel();
@@ -80,29 +81,47 @@ public class GUI extends JFrame{
         menu_lateral.add(botao_receitas);
         menu_lateral.add(botao_loja);
  
+
+
         lista_receita.setBounds(400,200,250,100);
         add(lista_receita);
         lista_receita.setVisible(false);
 
-
+ 
+ 
+ 
+        // UI ESTOQUE //
         lista_estoque = new JList<>(estoque.listarItens());
         lista_estoque.setBounds(400,200,250,100);
         add(lista_estoque);
         lista_estoque.setVisible(false);
+        
+        // Adicione um ListSelectionListener à JList lista_estoque
+        lista_estoque.addListSelectionListener(new ListSelectionListener() {
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+        exibirDetalhesItemSelecionado();
+        }
+        });
+        // Adicione um ListSelectionListener à JList lista_estoque
 
         titulo_estoque.setBounds(500,80,90,50);
         titulo_estoque.setFont(new Font("Arial",Font.CENTER_BASELINE,15));
         add(titulo_estoque);
         titulo_estoque.setVisible(false);
         
+        // Crie um JPanel para exibir os detalhes dos produtos do estoque
+    
+        itemDetalhes.setLayout(new GridLayout(3, 2));
+        itemDetalhes.setBounds(150, 200, 250, 100);
+        itemDetalhes.setVisible(false);
+        add(itemDetalhes);
+        // UI ESTOQUE //
         
-        
-        
-        
-        lista_loja.setBounds(400,200,250,100);
-        add(lista_loja);
-        lista_loja.setVisible(false);
-         
+       // UI DA LOJA //  
+       lista_loja.setBounds(400,200,250,100);
+       add(lista_loja);
+       lista_loja.setVisible(false);
        
        titulo_loja.setBounds(500,80,90,50);
        titulo_loja.setFont(new Font("Arial",Font.CENTER_BASELINE,15));
@@ -119,57 +138,71 @@ public class GUI extends JFrame{
             comprarItem();
         }
     });
-    
+       // UI DA LOJA // 
 
     }
     
     public void abrirLoja(ActionEvent e){
-             
+     
+     //remover elementos de outra tela     
      lista_loja.setVisible(true);
      titulo_loja.setVisible(true);
      botao_comprar.setVisible(true);
-    
-        lista_estoque.setVisible(false);
-        titulo_estoque.setVisible(false);
+     itemDetalhes.setVisible(false);
+     
+     //exibir elementos da loja
+     lista_estoque.setVisible(false);
+     titulo_estoque.setVisible(false);
+     
     }
 
      public void abrirEstoque(ActionEvent e){
-
-
+        //remover elementos de outra tela
         lista_loja.setVisible(false);
         titulo_loja.setVisible(false);
         botao_comprar.setVisible(false);
 
+        //exibir elementos do estoque
         lista_estoque.setVisible(true);
         titulo_estoque.setVisible(true);
         lista_estoque.setListData(estoque.listarItens());
     }
 
-     private void comprarItem() {
-        
-        int indexSelecionado = lista_loja.getSelectedIndex();
+    public void abrirReceitas(ActionEvent e){
+        lista_loja.setVisible(false);
+        titulo_loja.setVisible(false);
+        botao_comprar.setVisible(false);
+        lista_estoque.setVisible(false);
+        titulo_estoque.setVisible(false);
 
-        if (indexSelecionado != -1) {
+        lista_receita.setVisible(true);
+
+    }
+
+     private void comprarItem() {
+     int indexSelecionado = lista_loja.getSelectedIndex();
+
+            if (indexSelecionado != -1) {
             String itemSelecionado = itens[indexSelecionado];
 
             materiaPrima materiaPrima = criarMateriaPrima(itemSelecionado);
 
             estoque.adicionarItem(materiaPrima);
 
-            // Agora você pode fazer algo com o item selecionado, por exemplo, exibir uma mensagem
+            // Mensagem de produto comprado
             JOptionPane.showMessageDialog(this, "Você comprou: " + itemSelecionado);
         } else {
             // Caso nenhum item esteja selecionado
             JOptionPane.showMessageDialog(this, "Selecione um item antes de comprar");
         }  
- }
+     }
 
  
 
- private materiaPrima criarMateriaPrima(String tipo) {
+    private materiaPrima criarMateriaPrima(String tipo) {
     // Lógica para criar e retornar uma instância da classe MateriaPrima desejada
-    // Aqui você pode ter um switch ou if-else para determinar o tipo e criar o objeto correspondente
-    switch (tipo) {
+    
+     switch (tipo) {
         case "ÁGUA":
             return new agua(100,10,"Água");
         case "MALTE":
@@ -182,9 +215,35 @@ public class GUI extends JFrame{
         
         default:
             throw new IllegalArgumentException("Tipo de matéria-prima desconhecido: " + tipo);
+      }   
+    }
+
+    // Método para exibir os detalhes do item selecionado
+    private void exibirDetalhesItemSelecionado() {
+    int indexSelecionado = lista_estoque.getSelectedIndex();
+    itemDetalhes.setVisible(true);
+    //evitar duplição
+    itemDetalhes.removeAll();
+
+    if (indexSelecionado != -1) {
+        materiaPrima itemSelecionado = estoque.getMaterias().get(indexSelecionado);
+ 
+
+        // Adicione rótulos e valores ao JPanel
+        itemDetalhes.add(new JLabel("NOME:"));
+        itemDetalhes.add(new JLabel(itemSelecionado.getDesc()));
+
+        itemDetalhes.add(new JLabel("QUANTIDADE:"));
+        itemDetalhes.add(new JLabel(String.valueOf(itemSelecionado.getPeso())));
+
+        itemDetalhes.add(new JLabel("PREÇO:"));
+        itemDetalhes.add(new JLabel(String.valueOf(itemSelecionado.getCusto())));
+        
+       //atualizar tela
+       repaint();
+       revalidate();
     }
 }
-
 
 
 }

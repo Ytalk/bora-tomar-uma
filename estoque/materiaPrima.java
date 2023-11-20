@@ -16,6 +16,16 @@ public abstract class materiaPrima {
        return desc;
    }
 
+   public double getCusto() {
+       return custo;
+   }
+
+   public int getPeso() {
+       return peso;
+   }
+
+   
+
  public String toString(){
    return "PREÇO: " + custo + "R$" + "PESO: " + peso + "g " + desc;
   }
