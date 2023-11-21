@@ -3,14 +3,31 @@ package estoque;
 public abstract class materiaPrima {
     
  private int peso; // 
- private String tipo; // ex tipo : grão, água .. etc
  private double custo;
+ private String desc; // nome do item
     
- public materiaPrima(int peso, String tipo){
+ public materiaPrima(int peso, double custo, String desc){
     this.peso = peso;
+    this.custo = custo;
+    this.desc = desc;
  }
 
- 
+   public String getDesc() {
+       return desc;
+   }
 
+   public double getCusto() {
+       return custo;
+   }
+
+   public int getPeso() {
+       return peso;
+   }
+
+   
+
+ public String toString(){
+   return "PREÇO: " + custo + "R$" + "PESO: " + peso + "g " + desc;
+  }
 
 }
