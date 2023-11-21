@@ -26,9 +26,10 @@ public class tela extends JFrame{
  String[] itens = {"ÁGUA","MALTE","LÚPULO","FERMENTO"};//
  JList<String> lista_loja = new JList<>(itens);
  JList<String> lista_estoque; 
+ JList<String> lista_cervejas;
  JList<String> lista_receita = new JList<>(itens);;
  JLabel titulo_loja = new JLabel("LOJA");
- JLabel titulo_estoque = new JLabel("ESTOQUE");
+ JLabel titulo_estoque = new JLabel("INGREDIENTES");
  JPanel itemDetalhes = new JPanel();
  JButton botao_comprar = new JButton("COMPRAR");
 
@@ -92,7 +93,7 @@ public class tela extends JFrame{
  
         // UI ESTOQUE //
         lista_estoque = new JList<>(estoque.listarItens());
-        lista_estoque.setBounds(400,200,250,100);
+        lista_estoque.setBounds(500,150,250,150);
         add(lista_estoque);
         lista_estoque.setVisible(false);
         
@@ -105,17 +106,17 @@ public class tela extends JFrame{
         });
         // Adicione um ListSelectionListener à JList lista_estoque
 
-        titulo_estoque.setBounds(500,80,90,50);
+        titulo_estoque.setBounds(580,100,120,50);
         titulo_estoque.setFont(new Font("Arial",Font.CENTER_BASELINE,15));
         add(titulo_estoque);
         titulo_estoque.setVisible(false);
         
         // Crie um JPanel para exibir os detalhes dos produtos do estoque
-    
         itemDetalhes.setLayout(new GridLayout(3, 2));
         itemDetalhes.setBounds(150, 200, 250, 100);
         itemDetalhes.setVisible(false);
         add(itemDetalhes);
+      
         // UI ESTOQUE //
         
        // UI DA LOJA //  
@@ -169,14 +170,24 @@ public class tela extends JFrame{
     }
 
     public void abrirReceitas(ActionEvent e){
+        // remover elementos de outra tela;
         lista_loja.setVisible(false);
         titulo_loja.setVisible(false);
         botao_comprar.setVisible(false);
-        lista_estoque.setVisible(false);
         titulo_estoque.setVisible(false);
 
+        
+        lista_estoque.setVisible(true);
+        lista_estoque.setListData(estoque.listarItens());
+        
+        
         lista_receita.setVisible(false);
+         
 
+
+         //atualizar tela
+         repaint();
+         revalidate();
     }
 
      private void comprarItem() {
