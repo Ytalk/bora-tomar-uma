@@ -20,9 +20,9 @@ public class receita{
         return nome;
     }
 
-    /*public arrayList<materiaPrima> getReceita(){
+    public ArrayList<materiaPrima> getReceita(){
         return ingredientes;
-    }*/
+    }
 
     public int getPeso(){
         int pesoTotal = 0;
