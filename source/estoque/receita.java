@@ -1,8 +1,7 @@
-package estoque;
+package estoque_classes;
 
 import java.util.ArrayList;
-
-import estoque.materiaPrima;
+import estoque_classes.materiaPrima;
 
 public class receita{
     private String nome;

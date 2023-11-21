@@ -1,7 +1,7 @@
 package source;
 
 
-import estoque.*;
+import estoque.estoque_classes.*;
 
 public class main {
 

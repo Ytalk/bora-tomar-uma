@@ -1,4 +1,4 @@
-package estoque;
+package estoque_classes;
 
 public abstract class materiaPrima {
     

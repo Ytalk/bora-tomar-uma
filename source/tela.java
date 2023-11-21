@@ -17,7 +17,7 @@ import javax.swing.JTextArea;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import estoque.*;
+import estoque.estoque_classes.*;
 
 
 

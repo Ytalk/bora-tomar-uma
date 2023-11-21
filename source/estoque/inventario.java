@@ -1,4 +1,4 @@
-package estoque;
+package estoque_classes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +8,7 @@ public class inventario {
     
     private ArrayList <materiaPrima> materias;
     private ArrayList <cervejaArtesanal> cervejas;
+    private ArrayList <receita> receitas;
     
    public inventario(){
     this.materias = new ArrayList<materiaPrima>();
@@ -32,11 +33,20 @@ public class inventario {
         return materias;
     }
 
+    public void adicionarCerveja(cervejaArtesanal cerveja){
+        cervejas.add(cerveja);
+    }
 
-   public void adicionarCerveja(cervejaArtesanal cerveja){
-    cervejas.add(cerveja);
-   }
+    public ArrayList<cervejaArtesanal> getCervejas(){
+        return cervejas;
+    }
 
-
+    public void addReceita(receita receita){
+        receitas.add(receita);
+    }
+    
+    public ArrayList<receita> getReceitas(){
+        return receitas;
+    }
 
 }
