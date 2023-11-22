@@ -1,4 +1,4 @@
-package estoque_classes;
+package estoque;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package estoque_classes;
+package estoque;
 
 public class malte extends materiaPrima {
 

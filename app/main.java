@@ -1,7 +1,7 @@
-package source;
+package app;
 
 
-import estoque.estoque_classes.*;
+import estoque.*;
 
 public class main {
 
