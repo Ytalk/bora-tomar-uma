@@ -1,20 +1,20 @@
 package estoque;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public abstract class cervejaArtesanal{
+
+public abstract class CervejaArtesanal{
     private String nome;
     private int volume; // quantidade de cerveja produziada
     private double valor;
-    private ArrayList<materiaPrima> rótulo;
+    private ArrayList<MateriaPrima> rótulo;
 
-    public cervejaArtesanal(receita receita){
+    public CervejaArtesanal(Receita receita){
         this.nome = receita.getNome();
         this.valor = receita.getCusto() + (receita.getCusto() * 0.25);//margem de lucro de 25%
         this.volume = receita.getPeso();//forma grosseira de calcular
 
-        this.rótulo = new ArrayList<materiaPrima>();
+        this.rótulo = new ArrayList<MateriaPrima>();
         this.rótulo = receita.getReceita();
     }
 
@@ -33,7 +33,7 @@ public abstract class cervejaArtesanal{
     public String listarRótulo(){
         StringBuilder resultado = new StringBuilder();
         
-        for(materiaPrima item : this.rótulo){
+        for(MateriaPrima item : this.rótulo){
             resultado.append(item.getDesc()).append("\n");
         }
         return resultado.toString();

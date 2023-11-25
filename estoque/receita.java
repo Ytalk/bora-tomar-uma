@@ -3,16 +3,16 @@ package estoque;
 import java.util.ArrayList;
 
 
-public class receita{
+public class Receita{
     private String nome;
-    private ArrayList<materiaPrima> ingredientes;
+    private ArrayList<MateriaPrima> ingredientes;
 
-    public receita(String nome){
+    public Receita(String nome){
         this.nome = nome;
-        this.ingredientes = new ArrayList<materiaPrima>();
+        this.ingredientes = new ArrayList<MateriaPrima>();
     }
 
-    public void addIngrediente(materiaPrima ingrediente){
+    public void addIngrediente(MateriaPrima ingrediente){
         ingredientes.add(ingrediente);
     }
 
@@ -20,14 +20,14 @@ public class receita{
         return nome;
     }
 
-    public ArrayList<materiaPrima> getReceita(){
+    public ArrayList<MateriaPrima> getReceita(){
         return ingredientes;
     }
 
     public int getPeso(){
         int pesoTotal = 0;
 
-        for(materiaPrima ingrediente : ingredientes){
+        for(MateriaPrima ingrediente : ingredientes){
             pesoTotal += ingrediente.getPeso();
         }
         return pesoTotal;
@@ -36,7 +36,7 @@ public class receita{
     public double getCusto(){
         double custoDaReceita = 0;
 
-        for(materiaPrima ingrediente : ingredientes){
+        for(MateriaPrima ingrediente : ingredientes){
             custoDaReceita += ingrediente.getCusto();
         }
         return custoDaReceita;
@@ -45,7 +45,7 @@ public class receita{
     public String listarReceita(){
         String receita = "\n======================================================\n\t\tRECEITA" + nome.toUpperCase() + "======================================================\n\n";
         
-        for(materiaPrima ingrediente : ingredientes){
+        for(MateriaPrima ingrediente : ingredientes){
             receita = receita + ingrediente.getPeso() + " gramas de " + ingrediente.getDesc() + "\t-\t" + ingrediente.getCusto() + "\n";
         }
         return receita;

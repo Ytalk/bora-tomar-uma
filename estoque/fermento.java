@@ -1,8 +1,8 @@
 package estoque;
 
-public class fermento extends materiaPrima {
+public class Fermento extends MateriaPrima {
 
-    public fermento(int peso, double custo, String desc) {
+    public Fermento(int peso, double custo, String desc) {
         super(peso, custo, desc);
         //TODO Auto-generated constructor stub
     }

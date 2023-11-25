@@ -4,22 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class inventario{
-    private ArrayList <materiaPrima> materias;
-    private ArrayList <cervejaArtesanal> cervejas;
-    private ArrayList <receita> receitas;
+public class Inventario{
+    private ArrayList <MateriaPrima> materias;
+    private ArrayList <CervejaArtesanal> cervejas;
+    private ArrayList <Receita> receitas;
     
-    public inventario(){
-        this.materias = new ArrayList<materiaPrima>();
-        this.cervejas = new ArrayList<cervejaArtesanal>();
-        this.receitas = new ArrayList<receita>();
+    public Inventario(){
+        this.materias = new ArrayList<MateriaPrima>();
+        this.cervejas = new ArrayList<CervejaArtesanal>();
+        this.receitas = new ArrayList<Receita>();
     }
 
-    public void adicionarItem(materiaPrima item){
+    public void adicionarItem(MateriaPrima item){
         materias.add(item);
     }
 
-    public List<materiaPrima> getMaterias() {
+    public List<MateriaPrima> getMaterias() {
         return materias;
     }
 
@@ -33,42 +33,42 @@ public class inventario{
         return itens;
     }
 
-    public void adicionarCerveja(cervejaArtesanal cerveja){
+    public void adicionarCerveja(CervejaArtesanal cerveja){
         cervejas.add(cerveja);
     }
 
-    public ArrayList<cervejaArtesanal> getCervejas(){
+    public ArrayList<CervejaArtesanal> getCervejas(){
         return cervejas;
     }
 
-    public String listarCervejas(){
-        String cervejas = "";
-        
-        for(cervejaArtesanal cerveja : this.cervejas){
-            cervejas = cervejas + cerveja.getNome() + "\n\n" + cerveja.getValor() + "\n" + cerveja.getVolume();
+    public String[] listarCervejas(){
+       String[] itens = new String[cervejas.size()];
+       for (int i = 0; i < materias.size(); i++) {
+            itens[i] = cervejas.get(i).getNome(); // Supondo que sua classe materiaPrima tem um método getNome()
         }
-        return cervejas;
+
+        return itens;
     }
 
-    public void addReceita(receita receita){
+    public void addReceita(Receita receita){
         receitas.add(receita);
     }
     
-    public ArrayList<receita> getReceitas(){
+    public ArrayList<Receita> getReceitas(){
         return receitas;
     }
 
 
-    public cervejaArtesanal getCerveja(String nome) throws NoSuchElementException{
-        for(cervejaArtesanal cerveja: cervejas){
+    public CervejaArtesanal getCerveja(String nome) throws NoSuchElementException{
+        for(CervejaArtesanal cerveja: cervejas){
             if(cerveja.getNome() == nome)
                 return cerveja;
         }
         throw new NoSuchElementException("cerveja não encontrada com o nome: " + nome);
     }
 
-    public receita getReceita(String nome) throws NoSuchElementException{
-        for(receita receita: receitas){
+    public Receita getReceita(String nome) throws NoSuchElementException{
+        for(Receita receita: receitas){
             if(receita.getNome() == nome)
                 return receita;
         }

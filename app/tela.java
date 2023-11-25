@@ -22,15 +22,25 @@ import estoque.*;
 
 
 public class tela extends JFrame{
- inventario estoque = new inventario();
+ Inventario estoque = new Inventario();
+ 
  String[] itens = {"ÁGUA","MALTE","LÚPULO","FERMENTO"};//
+ 
  JList<String> lista_loja = new JList<>(itens);
  JList<String> lista_estoque; 
- JList<String> lista_receita = new JList<>(itens);;
+ JList<String> lista_receita;
+ JList<String> lista_cervejas;
+ 
  JLabel titulo_loja = new JLabel("LOJA");
- JLabel titulo_estoque = new JLabel("ESTOQUE");
+ JLabel titulo_ingredientes = new JLabel("INGREDIENTES");
+ JLabel titulo_cervejas = new JLabel("CERVEJAS");
+ 
  JPanel itemDetalhes = new JPanel();
+ 
+ 
  JButton botao_comprar = new JButton("COMPRAR");
+ JButton botao_adicionar = new JButton("ADICIONAR");
+ JButton botao_criar = new JButton("CRIAR");
 
 
     
@@ -73,42 +83,40 @@ public class tela extends JFrame{
         botao_receitas.addActionListener(this::abrirReceitas);
         
 
-        JPanel menu_lateral = new JPanel();
-        menu_lateral.setLayout(new GridLayout(3,1));
-        menu_lateral.setBounds(0,100,100,200);
-        add(menu_lateral);
-        menu_lateral.add(botao_inventario);
-        menu_lateral.add(botao_receitas);
-        menu_lateral.add(botao_loja);
- 
+        JPanel menu_superior = new JPanel();
+        menu_superior.setLayout(new GridLayout(1,3));
+        menu_superior.setBounds(0,0,400,40);
+        add(menu_superior);
+        menu_superior.add(botao_inventario);
+        menu_superior.add(botao_receitas);
+        menu_superior.add(botao_loja);
 
-
+        lista_receita = new JList<>(estoque.listarCervejas());
         lista_receita.setBounds(400,200,250,100);
         add(lista_receita);
         lista_receita.setVisible(false);
-
- 
  
  
         // UI ESTOQUE //
         lista_estoque = new JList<>(estoque.listarItens());
-        lista_estoque.setBounds(400,200,250,100);
-        add(lista_estoque);
+        lista_estoque.setBounds(500,150,250,150);        
+        lista_estoque.addListSelectionListener(e -> exibirDetalhesItemSelecionado()); // Adicione um ListSelectionListener à JList lista_estoque
         lista_estoque.setVisible(false);
-        
-        // Adicione um ListSelectionListener à JList lista_estoque
-        lista_estoque.addListSelectionListener(new ListSelectionListener() {
-        @Override
-        public void valueChanged(ListSelectionEvent e) {
-        exibirDetalhesItemSelecionado();
-        }
-        });
-        // Adicione um ListSelectionListener à JList lista_estoque
+        add(lista_estoque);
 
-        titulo_estoque.setBounds(500,80,90,50);
-        titulo_estoque.setFont(new Font("Arial",Font.CENTER_BASELINE,15));
-        add(titulo_estoque);
-        titulo_estoque.setVisible(false);
+        lista_cervejas = new JList<>(estoque.listarCervejas());
+        lista_cervejas.setBounds(50,150,250,150);
+        lista_cervejas.setVisible(false);
+        add(lista_cervejas);
+
+        titulo_cervejas.setBounds(120,100,120,50);
+        titulo_cervejas.setFont(new Font("Arial",Font.CENTER_BASELINE,15));
+        titulo_ingredientes.setBounds(560,100,120,50);
+        titulo_ingredientes.setFont(new Font("Arial",Font.CENTER_BASELINE,15));
+        add(titulo_ingredientes);
+        add(titulo_cervejas);
+        titulo_ingredientes.setVisible(false);
+        titulo_cervejas.setVisible(false);
         
         // Crie um JPanel para exibir os detalhes dos produtos do estoque
     
@@ -116,43 +124,56 @@ public class tela extends JFrame{
         itemDetalhes.setBounds(150, 200, 250, 100);
         itemDetalhes.setVisible(false);
         add(itemDetalhes);
+       
         // UI ESTOQUE //
         
        // UI DA LOJA //  
+
        lista_loja.setBounds(400,200,250,100);
-       add(lista_loja);
        lista_loja.setVisible(false);
+       add(lista_loja);
+       
        
        titulo_loja.setBounds(500,80,90,50);
        titulo_loja.setFont(new Font("Arial",Font.CENTER_BASELINE,15));
-       add(titulo_loja);
        titulo_loja.setVisible(false);
+       add(titulo_loja);
+       
 
        botao_comprar.setBounds(650,200,120,50);
        botao_comprar.setFont(new Font("Arial",Font.CENTER_BASELINE,15));
-       add(botao_comprar);
        botao_comprar.setVisible(false);
-       botao_comprar.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            comprarItem();
-        }
-    });
+       botao_comprar.addActionListener(e -> comprarItem());
+       add(botao_comprar);
+       
        // UI DA LOJA // 
 
+       // UI DA RECEITA //
+ 
+       lista_receita.setBounds(50,150,250,150);
+
+       botao_criar.setBounds(30,400,120,50);
+       botao_criar.setFont(new Font("Arial",Font.CENTER_BASELINE,15));
+       botao_criar.setVisible(false);
+       add(botao_criar);
     }
     
     public void abrirLoja(ActionEvent e){
      
      //remover elementos de outra tela     
+     lista_estoque.setVisible(false);
+     titulo_ingredientes.setVisible(false);
+     titulo_cervejas.setVisible(false);
+     itemDetalhes.setVisible(false);
+     lista_receita.setVisible(false);
+     lista_cervejas.setVisible(false);
+      botao_criar.setVisible(false);
+
+     //exibir elementos da loja
      lista_loja.setVisible(true);
      titulo_loja.setVisible(true);
      botao_comprar.setVisible(true);
-     itemDetalhes.setVisible(false);
      
-     //exibir elementos da loja
-     lista_estoque.setVisible(false);
-     titulo_estoque.setVisible(false);
      
     }
 
@@ -161,21 +182,34 @@ public class tela extends JFrame{
         lista_loja.setVisible(false);
         titulo_loja.setVisible(false);
         botao_comprar.setVisible(false);
+        lista_receita.setVisible(false);
+        botao_criar.setVisible(false);
 
         //exibir elementos do estoque
+        
+        lista_cervejas.setVisible(true);
         lista_estoque.setVisible(true);
-        titulo_estoque.setVisible(true);
+        titulo_ingredientes.setVisible(true);
+        titulo_cervejas.setVisible(true);
         lista_estoque.setListData(estoque.listarItens());
     }
 
     public void abrirReceitas(ActionEvent e){
         lista_loja.setVisible(false);
         titulo_loja.setVisible(false);
+        titulo_cervejas.setVisible(false);
         botao_comprar.setVisible(false);
-        lista_estoque.setVisible(false);
-        titulo_estoque.setVisible(false);
+        titulo_ingredientes.setVisible(false);
+        lista_cervejas.setVisible(false);
 
-        lista_receita.setVisible(false);
+        lista_receita.setVisible(true);
+        botao_criar.setVisible(true);
+        itemDetalhes.setBounds(550, 310, 250, 100);
+        lista_estoque.setVisible(true);
+        lista_estoque.setListData(estoque.listarItens());
+        titulo_ingredientes.setVisible(true);
+        
+        
 
     }
 
@@ -185,7 +219,7 @@ public class tela extends JFrame{
             if (indexSelecionado != -1) {
             String itemSelecionado = itens[indexSelecionado];
 
-            materiaPrima materiaPrima = criarMateriaPrima(itemSelecionado);
+            MateriaPrima materiaPrima = criarMateriaPrima(itemSelecionado);
 
             estoque.adicionarItem(materiaPrima);
 
@@ -197,21 +231,36 @@ public class tela extends JFrame{
         }  
      }
 
+     private void ProduzirCerveja(){
+        int indexSelecionado = lista_estoque.getSelectedIndex();
+
+        if(indexSelecionado != -1 ){
+            String itemSelecionado = lista_receita.getModel().getElementAt(indexSelecionado);
+
+
+        }
+
+     }
+
+     private void criarCerveja(){
+     
+     }
+
  
 
-    private materiaPrima criarMateriaPrima(String tipo) {
+    private MateriaPrima criarMateriaPrima(String tipo) {
     // Lógica para criar e retornar uma instância da classe MateriaPrima desejada
     
      switch (tipo) {
         case "ÁGUA":
-            return new agua(100,10,"Água");
+            return new Agua(100,10,"Água");
         case "MALTE":
-            return new malte(200,20,"Malte");
+            return new Malte(200,20,"Malte");
         case "LÚPULO":
-            return new lupulo(300,15,"Lupulo");
+            return new Lupulo(300,15,"Lupulo");
         // Adicione outros casos conforme necessário
         case "FERMENTO":
-        return new fermento(400, 25, "Fermento");
+        return new Fermento(400, 25, "Fermento");
         
         default:
             throw new IllegalArgumentException("Tipo de matéria-prima desconhecido: " + tipo);
@@ -226,7 +275,7 @@ public class tela extends JFrame{
     itemDetalhes.removeAll();
 
     if (indexSelecionado != -1) {
-        materiaPrima itemSelecionado = estoque.getMaterias().get(indexSelecionado);
+        MateriaPrima itemSelecionado = estoque.getMaterias().get(indexSelecionado);
  
 
         // Adicione rótulos e valores ao JPanel
@@ -243,6 +292,7 @@ public class tela extends JFrame{
        repaint();
        revalidate();
     }
+    
 }
 
 
