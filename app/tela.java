@@ -1,4 +1,4 @@
-package source;
+package app;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -17,7 +17,7 @@ import javax.swing.JTextArea;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import estoque.estoque_classes.*;
+import estoque.*;
 
 
 

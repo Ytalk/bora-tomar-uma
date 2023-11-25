@@ -1,4 +1,4 @@
-package estoque_classes;
+package estoque;
 
 public abstract class adicional extends materiaPrima {
 
