@@ -3,6 +3,7 @@ package estoque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Iterator;
 
 public class Inventario{
     private ArrayList <MateriaPrima> materias;
@@ -65,6 +66,18 @@ public class Inventario{
                 return cerveja;
         }
         throw new NoSuchElementException("cerveja não encontrada com o nome: " + nome);
+    }
+
+    public void deletarCerveja(String nome){
+        Iterator<CervejaArtesanal> iterator = cervejas.iterator();
+    
+        while(iterator.hasNext()){
+            CervejaArtesanal cerveja = iterator.next();
+            if (cerveja.getNome().equals(nome)){
+                iterator.remove();
+                System.out.println("Cerveja removida do estoque: " + cerveja.getNome());
+            }
+        }
     }
 
     public Receita getReceita(String nome) throws NoSuchElementException{

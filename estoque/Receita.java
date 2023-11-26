@@ -43,7 +43,7 @@ public class Receita{
     }
 
     public String listarReceita(){
-        String receita = "\n======================================================\n\t\tRECEITA" + nome.toUpperCase() + "======================================================\n\n";
+        String receita = "\n======================================================\n\t\tRECEITA" + nome.toUpperCase() + "\n======================================================\n\n";
         
         for(MateriaPrima ingrediente : ingredientes){
             receita = receita + ingrediente.getPeso() + " gramas de " + ingrediente.getDesc() + "\t-\t" + ingrediente.getCusto() + "\n";
