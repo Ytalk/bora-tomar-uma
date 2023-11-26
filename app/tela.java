@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JDialog;
@@ -23,6 +24,8 @@ import estoque.*;
 
 public class tela extends JFrame{
  Inventario estoque = new Inventario();
+
+ ImageIcon icone_setas = new ImageIcon("./icons/setas.png");
  
  String[] itens = {"ÁGUA","MALTE","LÚPULO","FERMENTO"};//
  
@@ -34,10 +37,11 @@ public class tela extends JFrame{
  JLabel titulo_loja = new JLabel("LOJA");
  JLabel titulo_ingredientes = new JLabel("INGREDIENTES");
  JLabel titulo_cervejas = new JLabel("CERVEJAS");
- 
+ JLabel imagem_setas = new JLabel();
+
  JPanel itemDetalhes = new JPanel();
  
- 
+ JButton botao_novaReceita = new JButton("NOVA RECEITA");
  JButton botao_comprar = new JButton("COMPRAR");
  JButton botao_adicionar = new JButton("ADICIONAR");
  JButton botao_criar = new JButton("CRIAR");
@@ -156,6 +160,18 @@ public class tela extends JFrame{
        botao_criar.setFont(new Font("Arial",Font.CENTER_BASELINE,15));
        botao_criar.setVisible(false);
        add(botao_criar);
+
+       botao_novaReceita.setBounds(150,400,160,50);
+       botao_novaReceita.setFont(new Font("Arial",Font.CENTER_BASELINE,15));
+       botao_novaReceita.addActionListener(this::menuNovaReceita);
+       botao_novaReceita.setVisible(false);
+       add(botao_novaReceita);
+
+       imagem_setas.setIcon(icone_setas);
+       imagem_setas.setBounds(390,200,30,30);
+       imagem_setas.setVisible(false);
+       add(imagem_setas);
+
     }
     
     public void abrirLoja(ActionEvent e){
@@ -168,6 +184,7 @@ public class tela extends JFrame{
      lista_receita.setVisible(false);
      lista_cervejas.setVisible(false);
       botao_criar.setVisible(false);
+      imagem_setas.setVisible(false);
 
      //exibir elementos da loja
      lista_loja.setVisible(true);
@@ -184,6 +201,7 @@ public class tela extends JFrame{
         botao_comprar.setVisible(false);
         lista_receita.setVisible(false);
         botao_criar.setVisible(false);
+        imagem_setas.setVisible(false);
 
         //exibir elementos do estoque
         
@@ -202,13 +220,37 @@ public class tela extends JFrame{
         titulo_ingredientes.setVisible(false);
         lista_cervejas.setVisible(false);
 
+        imagem_setas.setVisible(true);
+        lista_estoque.addListSelectionListener(a -> ProduzirCerveja());
         lista_receita.setVisible(true);
         botao_criar.setVisible(true);
         itemDetalhes.setBounds(550, 310, 250, 100);
         lista_estoque.setVisible(true);
         lista_estoque.setListData(estoque.listarItens());
         titulo_ingredientes.setVisible(true);
+        botao_novaReceita.setVisible(true);
         
+
+    }
+
+    public void menuNovaReceita(ActionEvent e){
+
+        lista_loja.setVisible(false);
+        titulo_loja.setVisible(false);
+        titulo_cervejas.setVisible(false);
+        botao_comprar.setVisible(false);
+        titulo_ingredientes.setVisible(false);
+        lista_cervejas.setVisible(false);
+
+        lista_estoque.addListSelectionListener(a -> ProduzirCerveja());
+        lista_receita.setVisible(true);
+        botao_criar.setVisible(true);
+        itemDetalhes.setBounds(550, 310, 250, 100);
+        lista_estoque.setVisible(true);
+        lista_estoque.setListData(estoque.listarItens());
+        titulo_ingredientes.setVisible(true);
+
+        botao_novaReceita.setVisible(false);
         
 
     }
@@ -235,9 +277,9 @@ public class tela extends JFrame{
         int indexSelecionado = lista_estoque.getSelectedIndex();
 
         if(indexSelecionado != -1 ){
-            String itemSelecionado = lista_receita.getModel().getElementAt(indexSelecionado);
-
-
+            String itemSelecionado = lista_estoque.getModel().getElementAt(indexSelecionado);
+                
+            JOptionPane.showMessageDialog(this, "Você adicionou à receita: " + itemSelecionado);
         }
 
      }
