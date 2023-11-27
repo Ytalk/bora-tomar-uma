@@ -35,8 +35,19 @@ public class Inventario{
     }
 
     public void adicionarCerveja(CervejaArtesanal cerveja){
-        cervejas.add(cerveja);
+        ArrayList<MateriaPrima> label = cerveja.getRótulo();
+
+        for(MateriaPrima item: materias){
+            for(MateriaPrima rótulo: label){
+                if ((item.getPeso() > rótulo.getPeso()) && (item.getDesc().equals(rótulo.getDesc()))){
+                    item.setPeso(item.getPeso() - rótulo.getPeso());
+                    cervejas.add(cerveja);
+                }
+            }
+        }
     }
+
+
 
     public ArrayList<CervejaArtesanal> getCervejas(){
         return cervejas;

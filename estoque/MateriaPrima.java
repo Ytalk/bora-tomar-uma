@@ -24,7 +24,9 @@ public abstract class MateriaPrima {
        return peso;
    }
 
-   
+  public void setPeso(int peso){
+    this.peso = peso;
+  }
 
  public String toString(){
    return "PREÇO: " + custo + "R$" + "PESO: " + peso + "g " + desc;

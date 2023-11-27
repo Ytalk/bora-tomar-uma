@@ -38,4 +38,8 @@ public abstract class CervejaArtesanal{
         }
         return resultado.toString();
     }
+
+    public ArrayList<MateriaPrima> getRótulo(){
+        return rótulo;
+    }
 }
