@@ -1,4 +1,4 @@
-package app;
+package estoque;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;

@@ -17,7 +17,16 @@ public class Inventario{
     }
 
     public void adicionarItem(MateriaPrima item){
-        materias.add(item);
+        boolean existente = false;
+        for(MateriaPrima itens : materias){
+            if(item.getDesc().equals(itens.getDesc())){
+                itens.setPeso(itens.getPeso() + item.getPeso());
+                existente = true;
+            }
+        }
+        if(existente == false){
+            materias.add(item);
+        }
     }
 
     public List<MateriaPrima> getMaterias() {
