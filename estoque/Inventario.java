@@ -79,6 +79,17 @@ public class Inventario{
         return receitas;
     }
 
+    public void deletarReceita(String nome){
+        Iterator<Receita> iterator = receitas.iterator();
+    
+        while(iterator.hasNext()){
+            Receita receita = iterator.next();
+            if(receita.getNome().equals(nome)){
+                iterator.remove();
+                System.out.println("Receita removida do estoque: " + receita.getNome()); 
+            }
+        }
+    }
 
     public CervejaArtesanal getCerveja(String nome) throws NoSuchElementException{
         for(CervejaArtesanal cerveja: cervejas){

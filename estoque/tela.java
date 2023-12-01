@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -63,7 +64,6 @@ public class tela extends JFrame{
         botao_inventario.setBounds(100, 200 ,250, 70);
         botao_inventario.setForeground(new Color(237,241,238 ));
         botao_inventario.setBackground(new Color(0,0,0 ));
-        
 
 
         JButton botao_receitas = new JButton("RECEITAS");
@@ -71,7 +71,6 @@ public class tela extends JFrame{
         botao_receitas.setBounds(400, 200 ,250, 70);
         botao_receitas.setForeground(new Color(237,241,238 ));
         botao_receitas.setBackground(new Color(0,0,0 ));
-        
 
 
         JButton botao_loja = new JButton("LOJA");
@@ -80,8 +79,7 @@ public class tela extends JFrame{
         botao_loja.setForeground(new Color(237,241,238 ));
         botao_loja.setBackground(new Color(0,0,0 ));
         
-       
-       
+        
         botao_loja.addActionListener(this::abrirLoja);
         botao_inventario.addActionListener(this::abrirEstoque);
         botao_receitas.addActionListener(this::abrirReceitas);
@@ -90,7 +88,7 @@ public class tela extends JFrame{
         JPanel menu_superior = new JPanel();
         menu_superior.setLayout(new GridLayout(1,3));
         menu_superior.setBounds(0,0,400,40);
-        add(menu_superior);
+        add(menu_superior, SwingConstants.NORTH);
         menu_superior.add(botao_inventario);
         menu_superior.add(botao_receitas);
         menu_superior.add(botao_loja);
