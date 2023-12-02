@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.DefaultListModel;
@@ -20,6 +21,8 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -30,11 +33,15 @@ import estoque.*;
 public class cervejaApp extends JFrame{
  
     Inventario estoque = new Inventario();
+  
 
     ImageIcon icone_setas = new ImageIcon("./icons/setas.png");
     
+    //
     String[] itens = {"ÁGUA","MALTE","LÚPULO","FERMENTO"};//
     
+    
+JTextArea textoQntd_loja = new JTextArea();
     
     JList<String> lista_loja = new JList<>(itens);
     JList<String> lista_estoque; 
@@ -51,10 +58,10 @@ public class cervejaApp extends JFrame{
     JPanel telaLoja = new JPanel();
     JPanel telaEstoque = new JPanel();
     JPanel telaReceita = new JPanel();
-    
+    Border bordaPreta = new LineBorder(Color.BLACK, 1);
        
     public cervejaApp (){
-   
+  
         configurarJanela();
     
     }
@@ -71,6 +78,7 @@ public class cervejaApp extends JFrame{
     }
     
     private void inicializarComponentes(){
+
 
       JButton botaoInventario = new JButton("INVENTÁRIO");
       JButton botaoReceitas = new JButton("RECEITAS");
@@ -101,20 +109,25 @@ public class cervejaApp extends JFrame{
         //TELA LOJA//
         
         telaLoja.setLayout(null);
-
-        JLabel tituloLoja = new JLabel("LOJA");
-        tituloLoja.setBounds(500,80,90,50);
-        telaLoja.add(tituloLoja);
-       
-        lista_loja.setBounds(400,200,250,100);
+      
+        JLabel itemLoja = new JLabel("NOME");
+        itemLoja.setBounds(5,10,90,50);
+        telaLoja.add(itemLoja);
+        
+        lista_loja.setFont(new Font("Arial", Font.BOLD, 14));
+        lista_loja.setBorder(bordaPreta);
+        lista_loja.setBounds(0,50,600,250);
         telaLoja.add(lista_loja);
 
-        JTextArea textoQntd_loja = new JTextArea();
-        textoQntd_loja.setBounds(500,350,200,40);
+        
+        
+        
+        textoQntd_loja.setBounds(400,300,200,20);
+        textoQntd_loja.setBorder(bordaPreta);
         telaLoja.add(textoQntd_loja);
        
         JButton botaoComprar = new JButton("COMPRAR");
-        botaoComprar.setBounds(650,200,120,50);
+        botaoComprar.setBounds(600,250,120,50);
         botaoComprar.addActionListener(e -> comprarItem());
         telaLoja.add(botaoComprar);
        
@@ -213,8 +226,10 @@ public class cervejaApp extends JFrame{
    
                if (indexSelecionado != -1) {
                String itemSelecionado = itens[indexSelecionado];
+
+               int qtd = Integer.parseInt(textoQntd_loja.getText().trim());
    
-               MateriaPrima materiaPrima = criarMateriaPrima(itemSelecionado);
+               MateriaPrima materiaPrima = criarMateriaPrima(itemSelecionado,qtd);
    
                estoque.adicionarItem(materiaPrima);
         
@@ -223,32 +238,37 @@ public class cervejaApp extends JFrame{
    
                // Mensagem de produto comprado
                JOptionPane.showMessageDialog(this, "Você comprou: " + itemSelecionado);
-               System.out.println(estoque.listarItens());
+              
            } else {
                // Caso nenhum item esteja selecionado
                JOptionPane.showMessageDialog(this, "Selecione um item antes de comprar");
            }  
         }
 
-         private MateriaPrima criarMateriaPrima(String tipo) {
+
+        
+
+
+         private MateriaPrima criarMateriaPrima(String tipo, int qtd) {
         // Lógica para criar e retornar uma instância da classe MateriaPrima desejada
         
          switch (tipo) {
             case "ÁGUA":
-                return new Agua(100,10,"Água");
+                return new Agua(qtd,10,"Água");
             case "MALTE":
-                return new Malte(200,20,"Malte");
+                return new Malte(qtd,20,"Malte");
             case "LÚPULO":
-                return new Lupulo(300,15,"Lupulo");
+                return new Lupulo(qtd,15,"Lupulo");
             // Adicione outros casos conforme necessário
             case "FERMENTO":
-            return new Fermento(400, 25, "Fermento");
+            return new Fermento(qtd, 25, "Fermento");
             
             default:
                 throw new IllegalArgumentException("Tipo de matéria-prima desconhecido: " + tipo);
           }   
         }
 
+  
 
 
 
@@ -283,6 +303,9 @@ public class cervejaApp extends JFrame{
 
 
  public static void main(String[] args) {
+
+
+    
     new cervejaApp().inicializarComponentes();
  
 
