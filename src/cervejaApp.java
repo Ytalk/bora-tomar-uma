@@ -27,6 +27,7 @@ import estoque.*;
 public class cervejaApp extends JFrame {
 
     Inventario estoque = new Inventario();
+    
 
     ImageIcon icone_setas = new ImageIcon("./icons/setas.png");
 
@@ -37,6 +38,8 @@ public class cervejaApp extends JFrame {
     JList<String> lista_loja = new JList<>(itens);
     JList<String> lista_estoque;
     JList<String> lista_cervejas;
+    JList<String> lista_estoque_receita = new JList<>(estoque.listarItens());
+    
 
     CardLayout layout = new CardLayout(10, 10);
     JPanel tela = new JPanel(layout);
@@ -45,6 +48,7 @@ public class cervejaApp extends JFrame {
     JPanel telaLoja = new JPanel();
     JPanel telaEstoque = new JPanel();
     JPanel telaReceita = new JPanel();
+    JPanel telaCerveja = new JPanel();
     Border bordaPreta = new LineBorder(Color.BLACK, 1);
 
     public cervejaApp() {
@@ -63,28 +67,34 @@ public class cervejaApp extends JFrame {
 
     private void inicializarComponentes() {
         JButton botaoInventario = new JButton("INVENTÁRIO");
-        JButton botaoReceitas = new JButton("RECEITAS");
+        JButton botaonovaReceita = new JButton("NOVA RECEITA");
+        JButton botaonovaCerveja = new JButton("NOVA CERVEJA");
         JButton botaoLoja = new JButton("LOJA");
 
-        JComboBox<String> combo = new JComboBox<>(new String[] { "Loja", "Estoque", "Receita" });
+        JComboBox<String> combo = new JComboBox<>(new String[] { "Loja", "Estoque", "Receita","Cerveja" });
         combo.addActionListener(e -> layout.show(tela, (String) combo.getSelectedItem()));
 
         JPanel menuSuperior = new JPanel();
-        menuSuperior.setLayout(new GridLayout(1, 3));
+        menuSuperior.setLayout(new GridLayout(1, 4));
         menuSuperior.setBounds(0, 0, 400, 40);
         menuSuperior.add(botaoInventario);
-        menuSuperior.add(botaoReceitas);
+        menuSuperior.add(botaonovaReceita);
+        menuSuperior.add(botaonovaCerveja);
         menuSuperior.add(botaoLoja);
-
+       
         configurarBotao(botaoLoja, this::abrirLoja);
         configurarBotao(botaoInventario, this::abrirEstoque);
-        configurarBotao(botaoReceitas, this::abrirReceita);
+        configurarBotao(botaonovaReceita, this::abrirnovaReceita);
+        configurarBotao(botaonovaCerveja, this::abrirCerveja);
+
+        // UI LOJA // 
 
         telaLoja.setLayout(null);
-
         JLabel itemLoja = new JLabel("NOME");
         itemLoja.setBounds(5, 10, 90, 50);
         telaLoja.add(itemLoja);
+
+        
 
         lista_loja.setFont(new Font("Arial", Font.BOLD, 14));
         lista_loja.setBorder(bordaPreta);
@@ -100,8 +110,12 @@ public class cervejaApp extends JFrame {
         botaoComprar.addActionListener(e -> comprarItem());
         telaLoja.add(botaoComprar);
 
-        telaEstoque.setLayout(null);
 
+        // UI LOJA // 
+
+        // UI ESTOQUE //
+
+        telaEstoque.setLayout(null);
         lista_estoque = new JList<>(estoque.listarItens());
         lista_estoque.setBounds(500, 150, 250, 150);
         lista_estoque.addListSelectionListener(e -> exibirDetalhesItemSelecionado());
@@ -120,14 +134,42 @@ public class cervejaApp extends JFrame {
         titulo_cervejas.setFont(new Font("Arial", Font.CENTER_BASELINE, 15));
         telaEstoque.add(titulo_cervejas);
 
+        // UI ESTOQUE //
+
+        // UI NOVA RECEITA //
+
         telaReceita.setLayout(null);
+    
         JLabel textReceita = new JLabel("RECEITA");
         textReceita.setBounds(100, 100, 100, 100);
         telaReceita.add(textReceita);
+       
+        
+        lista_estoque_receita.setBounds(500,150,200,200);
+        telaReceita.add(lista_estoque_receita);
 
+
+
+     
+        
+    
+
+        // UI NOVA RECEITA //
+
+
+        //UI CERVEJA // 
+
+        telaCerveja.setLayout(null);
+        JLabel textCerveja = new JLabel("CERVEJA");
+        textCerveja.setBounds(100, 100, 100, 100);
+        telaCerveja.add(textCerveja);
+
+        //UI CERVEJA // 
+        
         tela.add("Loja", telaLoja);
         tela.add("Estoque", telaEstoque);
         tela.add("Receita", telaReceita);
+        tela.add("Cerveja",textCerveja);
 
         add(menuSuperior, BorderLayout.NORTH);
         add(combo);
@@ -143,6 +185,8 @@ public class cervejaApp extends JFrame {
 
     private void abrirLoja(ActionEvent e) {
         layout.show(tela, "Loja");
+        repaint();
+        revalidate();
     }
 
     private void abrirEstoque(ActionEvent e) {
@@ -151,8 +195,15 @@ public class cervejaApp extends JFrame {
         revalidate();
     }
 
-    private void abrirReceita(ActionEvent e) {
+    private void abrirnovaReceita(ActionEvent e) {
+
         layout.show(tela, "Receita");
+        repaint();
+        revalidate();
+    }
+
+    private void abrirCerveja(ActionEvent e){
+        layout.show(tela,"Cerveja");
         repaint();
         revalidate();
     }
@@ -170,6 +221,8 @@ public class cervejaApp extends JFrame {
                 MateriaPrima materiaPrima = criarMateriaPrima(itemSelecionado, qtd);
                 estoque.adicionarItem(materiaPrima);
                 lista_estoque.setListData(estoque.listarItens());
+                lista_estoque_receita.setListData(estoque.listarItens());
+                
                 JOptionPane.showMessageDialog(this, "Você comprou: " + itemSelecionado);
             } else {
                 JOptionPane.showMessageDialog(this, "Informe a quantidade antes de comprar");
@@ -177,6 +230,12 @@ public class cervejaApp extends JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Selecione um item antes de comprar");
         }
+    }
+
+    private Receita novaReceita(String nome){
+        
+        throw new UnsupportedOperationException("Unimplemented method 'listAll'"); 
+   
     }
 
     private MateriaPrima criarMateriaPrima(String tipo, int qtd) {
