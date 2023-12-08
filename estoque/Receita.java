@@ -20,8 +20,14 @@ public class Receita{
         return nome;
     }
 
-    public ArrayList<MateriaPrima> getReceita(){
-        return ingredientes;
+    public String getReceita(){
+        
+     for(MateriaPrima item : ingredientes){
+         return item.getDesc();
+     }
+     return null;
+
+
     }
 
     public int getPeso(){
@@ -50,4 +56,12 @@ public class Receita{
         }
         return receita;
     }
+
+
+    @Override
+    public String toString() {
+        
+        return getNome();
+    }
+
 }

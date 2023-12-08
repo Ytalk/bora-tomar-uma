@@ -1,8 +1,12 @@
 package estoque;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
+
+import javax.swing.ListModel;
+
 import java.util.Iterator;
 
 public class Inventario{
@@ -37,7 +41,7 @@ public class Inventario{
         String[] itens = new String[materias.size()];
 
         for (int i = 0; i < materias.size(); i++) {
-            itens[i] = materias.get(i).getDesc(); // Supondo que sua classe materiaPrima tem um método getNome()
+            itens[i] = materias.get(i).getDesc(); 
         }
 
         return itens;
@@ -64,8 +68,8 @@ public class Inventario{
 
     public String[] listarCervejas(){
        String[] itens = new String[cervejas.size()];
-       for (int i = 0; i < materias.size(); i++) {
-            itens[i] = cervejas.get(i).getNome(); // Supondo que sua classe materiaPrima tem um método getNome()
+       for (int i = 0; i < cervejas.size(); i++) {
+            itens[i] = cervejas.get(i).getNome(); 
         }
 
         return itens;
@@ -75,9 +79,18 @@ public class Inventario{
         receitas.add(receita);
     }
     
-    public ArrayList<Receita> getReceitas(){
-        return receitas;
+      public Receita getReceitas() {
+
+        for(Receita receita : receitas){
+        return receita;
+        }
+        return null;
+
+
+      
     }
+
+    
 
     public void deletarReceita(String nome){
         Iterator<Receita> iterator = receitas.iterator();

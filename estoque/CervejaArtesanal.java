@@ -3,7 +3,7 @@ package estoque;
 import java.util.ArrayList;
 
 
-public abstract class CervejaArtesanal{
+public class CervejaArtesanal{
     private String nome;
     private int volume; // quantidade de cerveja produziada
     private double valor;
@@ -15,7 +15,7 @@ public abstract class CervejaArtesanal{
         this.volume = receita.getPeso();//forma grosseira de calcular
 
         this.rótulo = new ArrayList<MateriaPrima>();
-        this.rótulo = receita.getReceita();
+        
     }
 
     public String getNome(){
@@ -41,5 +41,11 @@ public abstract class CervejaArtesanal{
 
     public ArrayList<MateriaPrima> getRótulo(){
         return rótulo;
+    }
+
+    @Override
+    public String toString() {
+        
+        return getNome() + " " + getValor();
     }
 }

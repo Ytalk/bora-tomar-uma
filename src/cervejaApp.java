@@ -35,10 +35,21 @@ public class cervejaApp extends JFrame {
 
     JTextArea textoQntd_loja = new JTextArea();
 
+
     JList<String> lista_loja = new JList<>(itens);
     JList<String> lista_estoque;
-    JList<String> lista_cervejas;
+    
+    
+    JList<Receita> lista_receita;
+    JList<MateriaPrima> lista_ingredientes;
+
+
     JList<String> lista_estoque_receita = new JList<>(estoque.listarItens());
+    JList<String> lista_cervejas;
+    
+ 
+    DefaultListModel<MateriaPrima> materia = new DefaultListModel<>();
+    DefaultListModel<Receita> receitas = new DefaultListModel<>();
     
 
     CardLayout layout = new CardLayout(10, 10);
@@ -81,7 +92,7 @@ public class cervejaApp extends JFrame {
         menuSuperior.add(botaonovaReceita);
         menuSuperior.add(botaonovaCerveja);
         menuSuperior.add(botaoLoja);
-       
+     
         configurarBotao(botaoLoja, this::abrirLoja);
         configurarBotao(botaoInventario, this::abrirEstoque);
         configurarBotao(botaonovaReceita, this::abrirnovaReceita);
@@ -93,8 +104,6 @@ public class cervejaApp extends JFrame {
         JLabel itemLoja = new JLabel("NOME");
         itemLoja.setBounds(5, 10, 90, 50);
         telaLoja.add(itemLoja);
-
-        
 
         lista_loja.setFont(new Font("Arial", Font.BOLD, 14));
         lista_loja.setBorder(bordaPreta);
@@ -116,6 +125,7 @@ public class cervejaApp extends JFrame {
         // UI ESTOQUE //
 
         telaEstoque.setLayout(null);
+        lista_cervejas = new JList<>(estoque.listarCervejas());
         lista_estoque = new JList<>(estoque.listarItens());
         lista_estoque.setBounds(500, 150, 250, 150);
         lista_estoque.addListSelectionListener(e -> exibirDetalhesItemSelecionado());
@@ -125,7 +135,7 @@ public class cervejaApp extends JFrame {
         itemDetalhes.setBounds(300, 300, 250, 100);
         telaEstoque.add(itemDetalhes);
 
-        lista_cervejas = new JList<>(estoque.listarCervejas());
+        
         lista_cervejas.setBounds(50, 150, 250, 150);
         telaEstoque.add(lista_cervejas);
 
@@ -141,17 +151,26 @@ public class cervejaApp extends JFrame {
         telaReceita.setLayout(null);
     
         JLabel textReceita = new JLabel("RECEITA");
-        textReceita.setBounds(100, 100, 100, 100);
-        telaReceita.add(textReceita);
+        textReceita.setBounds(100, 50, 100, 100);
+        
+        JButton criar_receita = new JButton("CRIAR");
+        criar_receita.setFont(new Font("Arial", Font.BOLD, 14));
+        criar_receita.setBounds(100,350,80,40);
+        criar_receita.addActionListener(e -> criarReceita());
        
-        
+        lista_ingredientes = new JList<>();
+        lista_ingredientes.setFont(new Font("Arial", Font.BOLD, 14));
+        lista_ingredientes.setBorder(bordaPreta);
+        lista_ingredientes.setBounds(100,150,200,200);
+        lista_ingredientes.setModel(materia);
+
         lista_estoque_receita.setBounds(500,150,200,200);
+        lista_estoque_receita.addListSelectionListener(e -> adicionarItemReceita());
+         
+        telaReceita.add(textReceita);
+        telaReceita.add(lista_ingredientes);
         telaReceita.add(lista_estoque_receita);
-
-
-
-     
-        
+        telaReceita.add(criar_receita);
     
 
         // UI NOVA RECEITA //
@@ -162,14 +181,30 @@ public class cervejaApp extends JFrame {
         telaCerveja.setLayout(null);
         JLabel textCerveja = new JLabel("CERVEJA");
         textCerveja.setBounds(100, 100, 100, 100);
+        
+        lista_receita = new JList<>();
+        lista_receita.setFont(new Font("Arial", Font.BOLD, 14));
+        lista_receita.setBorder(bordaPreta);
+        lista_receita.setBounds(300,200,200,200);
+        lista_receita.setModel(receitas);
+        
+
+        JButton criar_cerveja = new JButton("CRIAR");
+        criar_cerveja.setFont(new Font("Arial", Font.BOLD, 14));
+        criar_cerveja.setBounds(100,350,80,40);
+        criar_cerveja.addActionListener(e -> criarCerveja());
+
+         
         telaCerveja.add(textCerveja);
+        telaCerveja.add(lista_receita);
+        telaCerveja.add(criar_cerveja);
 
         //UI CERVEJA // 
         
         tela.add("Loja", telaLoja);
         tela.add("Estoque", telaEstoque);
         tela.add("Receita", telaReceita);
-        tela.add("Cerveja",textCerveja);
+        tela.add("Cerveja",telaCerveja);
 
         add(menuSuperior, BorderLayout.NORTH);
         add(combo);
@@ -185,12 +220,14 @@ public class cervejaApp extends JFrame {
 
     private void abrirLoja(ActionEvent e) {
         layout.show(tela, "Loja");
+
         repaint();
         revalidate();
     }
 
     private void abrirEstoque(ActionEvent e) {
         layout.show(tela, "Estoque");
+       
         repaint();
         revalidate();
     }
@@ -204,11 +241,65 @@ public class cervejaApp extends JFrame {
 
     private void abrirCerveja(ActionEvent e){
         layout.show(tela,"Cerveja");
+
         repaint();
         revalidate();
     }
 
-    private void comprarItem() {
+    private void adicionarItemReceita() {
+
+        int indexSelecionado = lista_estoque_receita.getSelectedIndex();
+    
+        if (indexSelecionado != -1) {
+            MateriaPrima ingrediente = estoque.getMaterias().get(indexSelecionado);
+    
+            // Verifica se o item já está presente na lista de ingredientes
+            for (int i = 0; i < lista_ingredientes.getModel().getSize(); i++) {
+                MateriaPrima itemLista = materia.getElementAt(i);
+    
+                if (ingrediente.equals(itemLista)) {
+                  return;
+                }
+            }
+    
+            materia.addElement(ingrediente);
+        }
+    }
+      
+
+    private void criarReceita() {
+
+        if (lista_ingredientes.getModel().getSize() > 0) {
+            String nomeReceita = JOptionPane.showInputDialog("Informe o nome da receita:");
+            Receita receita = new Receita(nomeReceita);
+            for (int i = 0; i < lista_ingredientes.getModel().getSize(); i++) {
+                MateriaPrima ingrediente = materia.getElementAt(i);
+                receita.addIngrediente(ingrediente);
+            }
+            receitas.addElement(receita);
+        } else {
+            JOptionPane.showMessageDialog(this, "A lista de receita está vazia.");
+        }
+    }
+
+    private void criarCerveja() {
+        if (lista_receita.getSelectedIndex() != -1) {
+            Receita receita = receitas.getElementAt(lista_receita.getSelectedIndex());
+            CervejaArtesanal cerveja = new CervejaArtesanal(receita);
+            estoque.adicionarCerveja(cerveja);
+            
+            // Atualiza a lista de cervejas
+            lista_cervejas.setListData(estoque.listarCervejas());
+    
+            JOptionPane.showMessageDialog(this, "CRIADO!.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione uma receita antes de criar a cerveja.");
+        }
+    }
+    
+      
+
+       private void comprarItem() {
         int indexSelecionado = lista_loja.getSelectedIndex();
 
 
@@ -232,11 +323,7 @@ public class cervejaApp extends JFrame {
         }
     }
 
-    private Receita novaReceita(String nome){
-        
-        throw new UnsupportedOperationException("Unimplemented method 'listAll'"); 
-   
-    }
+
 
     private MateriaPrima criarMateriaPrima(String tipo, int qtd) {
         switch (tipo) {
