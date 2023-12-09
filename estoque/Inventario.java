@@ -1,11 +1,9 @@
 package estoque;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import javax.swing.ListModel;
 
 import java.util.Iterator;
 
