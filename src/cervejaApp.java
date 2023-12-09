@@ -18,6 +18,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
@@ -32,6 +33,7 @@ public class cervejaApp extends JFrame {
     ImageIcon icone_setas = new ImageIcon("./icons/setas.png");
 
     String[] itens = { "ÁGUA", "MALTE", "LÚPULO", "FERMENTO" };
+    String[] itensCusto = { "10", "20", "15", "25" };
 
     JTextArea textoQntd_loja = new JTextArea();
 
@@ -80,8 +82,8 @@ public class cervejaApp extends JFrame {
 
     private void inicializarComponentes() {
         JButton botaoInventario = new JButton("INVENTÁRIO");
-        JButton botaonovaReceita = new JButton("NOVA RECEITA");
-        JButton botaonovaCerveja = new JButton("NOVA CERVEJA");
+        JButton botaonovaReceita = new JButton("RECEITA");
+        JButton botaonovaCerveja = new JButton("CERVEJA");
         JButton botaoLoja = new JButton("LOJA");
 
         JComboBox<String> combo = new JComboBox<>(new String[] { "Loja", "Estoque", "Receita","Cerveja" });
@@ -100,29 +102,73 @@ public class cervejaApp extends JFrame {
         configurarBotao(botaonovaReceita, this::abrirnovaReceita);
         configurarBotao(botaonovaCerveja, this::abrirCerveja);
 
+
+
         // UI LOJA // 
 
         telaLoja.setLayout(null);
+
+        //seleciona, informa peso e compra
         JLabel itemLoja = new JLabel("NOME");
-        itemLoja.setBounds(5, 10, 90, 50);
+        itemLoja.setBounds(70, 10, 90, 50);
         telaLoja.add(itemLoja);
 
         lista_loja.setFont(new Font("Arial", Font.BOLD, 14));
         lista_loja.setBorder(bordaPreta);
-        lista_loja.setBounds(0, 50, 600, 250);
+        lista_loja.setBounds(0, 50, 180, 250);
         telaLoja.add(lista_loja);
 
-        textoQntd_loja.setBounds(400, 300, 200, 20);
+        textoQntd_loja.setBounds(0, 310, 180, 20);//campo para informar peso
         textoQntd_loja.setBorder(bordaPreta);
         telaLoja.add(textoQntd_loja);
 
         JButton botaoComprar = new JButton("COMPRAR");
-        botaoComprar.setBounds(600, 250, 120, 50);
+        botaoComprar.setBounds(380, 310, 180, 20);
         botaoComprar.addActionListener(e -> comprarItem());
         telaLoja.add(botaoComprar);
 
 
+        //area dos valores
+        JLabel labelPreço = new JLabel("PREÇO (kg)");
+        labelPreço.setBounds(250, 10, 90, 50);
+        telaLoja.add(labelPreço);
+
+        StringBuilder valores = new StringBuilder();
+        for (String item : itensCusto){
+            valores.append(item).append(" $\n");
+        }
+
+        JTextArea textoPreço_loja = new JTextArea();
+        textoPreço_loja.setEditable(false);
+        textoPreço_loja.setBounds(190, 50, 180, 250);
+        textoPreço_loja.setBorder(bordaPreta);
+        textoPreço_loja.setText(valores.toString());
+        textoPreço_loja.setFont(new Font("Arial", Font.BOLD, 14));
+        telaLoja.add(textoPreço_loja);
+
+        JLabel labelPeso = new JLabel("INFORMAR PESO (g)");
+        labelPeso.setBounds(190, 310, 180, 20);
+        labelPeso.setHorizontalAlignment(SwingConstants.CENTER);
+        labelPeso.setVerticalAlignment(SwingConstants.CENTER);
+        telaLoja.add(labelPeso);
+
+
+        //area total
+        JLabel labelPreçoTotal = new JLabel("PREÇO TOTAL");//aqui será implementado um sistema de cálculo automático
+        labelPreçoTotal.setBounds(430, 10, 90, 50);
+        telaLoja.add(labelPreçoTotal);
+
+        JTextArea textoPreçoTotal_loja = new JTextArea();
+        textoPreçoTotal_loja.setEditable(false);
+        textoPreçoTotal_loja.setBounds(380, 50, 180, 250);
+        textoPreçoTotal_loja.setBorder(bordaPreta);
+        //textoPreçoTotal_loja.setText();
+        textoPreçoTotal_loja.setFont(new Font("Arial", Font.BOLD, 14));
+        telaLoja.add(textoPreçoTotal_loja);
+
         // UI LOJA // 
+
+
 
         // UI ESTOQUE //
 
