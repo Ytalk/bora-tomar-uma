@@ -1,10 +1,18 @@
 package src;
 
-public class Agua extends MateriaPrima {
+public class Agua extends MateriaPrima{
 
-    public Agua(int peso, double custo, String desc) {
-        super(peso, custo, desc);
+    String descrição;
+
+    public Agua(int peso, double custo){
+        super(peso, custo);
+        descrição = "Água";
         //TODO Auto-generated constructor stub
+    }
+
+    @Override
+    public String getDesc() {
+        return descrição;
     }
     
 }

@@ -394,13 +394,13 @@ public class cervejaApp extends JFrame {
     private MateriaPrima criarMateriaPrima(String tipo, int qtd) {
         switch (tipo) {
             case "ÁGUA":
-                return new Agua(qtd, 10, "Água");
+                return new Agua(qtd, 10);
             case "MALTE":
-                return new Malte(qtd, 20, "Malte");
+                return new Malte(qtd, 20);
             case "LÚPULO":
-                return new Lupulo(qtd, 15, "Lúpulo");
+                return new Lupulo(qtd, 15);
             case "FERMENTO":
-                return new Fermento(qtd, 25, "Fermento");
+                return new Fermento(qtd, 25);
             default:
                 throw new IllegalArgumentException("Tipo de matéria-prima desconhecido: " + tipo);
         }
@@ -430,6 +430,36 @@ public class cervejaApp extends JFrame {
     }
 
     public static void main(String[] args) {
+        /*
+        Inventario invent = new Inventario();
+        Agua escolha = new Agua(1100, 10);
+        Malte escolha2 = new Malte(1000, 15);
+        Agua escolha3 = new Agua(800, 10);
+
+        System.out.println(escolha.getDesc() + "\n" + escolha.getCusto() + "$\n" + escolha.getPeso());//mostrar info dos ingredientes
+
+        Receita rec = new Receita("nome da receita");//manipulando receita
+        rec.addIngrediente(escolha);
+        rec.addIngrediente(escolha2);
+        System.err.println(rec.listarReceita());
+        System.out.println("\n\ncusto rec: " + rec.getCusto() + "\npeso rec: " + rec.getPeso());
+
+        CervejaArtesanal cerv = new CervejaArtesanal(rec);
+
+        invent.adicionarItem(escolha3);
+        invent.adicionarItem(escolha);
+        invent.adicionarItem(escolha2);
+        String elemento0 = invent.listarItens()[0];
+        System.out.println(elemento0);//inventário antes de criar cerveja
+
+        invent.adicionarCerveja(cerv);
+        elemento0 = invent.listarItens()[0];
+        //System.out.println(invent.listarCervejas());
+        System.out.println(elemento0);//inventário depois de criar cerveja
+        
+        null por falta de cast, polimorfismo em materias no inventario não informa o que é a matéria prima, e por padrão trata como matéria prima. 
+        */
+
         new cervejaApp();
     }
 }

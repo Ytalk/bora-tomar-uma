@@ -15,7 +15,7 @@ public class CervejaArtesanal{
         this.volume = receita.getPeso();//forma grosseira de calcular
 
         this.rótulo = new ArrayList<MateriaPrima>();
-        
+        this.rótulo = receita.getConteudo();
     }
 
     public String getNome(){

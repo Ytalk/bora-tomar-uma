@@ -26,8 +26,10 @@ public class Receita{
          return item.getDesc();
      }
      return null;
+    }
 
-
+    public ArrayList<MateriaPrima> getConteudo(){
+        return ingredientes;
     }
 
     public int getPeso(){
@@ -49,7 +51,7 @@ public class Receita{
     }
 
     public String listarReceita(){
-        String receita = "\n======================================================\n\t\tRECEITA" + nome.toUpperCase() + "\n======================================================\n\n";
+        String receita = "\n======================================================\n\tRECEITA:\t" + nome.toUpperCase() + "\n======================================================\n\n";
         
         for(MateriaPrima ingrediente : ingredientes){
             receita = receita + ingrediente.getPeso() + " gramas de " + ingrediente.getDesc() + "\t-\t" + ingrediente.getCusto() + "\n";
@@ -59,7 +61,7 @@ public class Receita{
 
 
     @Override
-    public String toString() {
+    public String toString(){
         
         return getNome();
     }

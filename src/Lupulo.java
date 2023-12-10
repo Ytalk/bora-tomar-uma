@@ -2,14 +2,17 @@ package src;
 
 public class Lupulo extends MateriaPrima{
 
-    String desc = "Lúpulo";
+    String descrição;
 
-
-    public Lupulo(int peso, double custo,String desc) {
-        super(peso, custo,desc);
+    public Lupulo(int peso, double custo) {
+        super(peso, custo);
+        descrição = "Lupulo";
         //TODO Auto-generated constructor stub
     }
 
 
+    public String getDesc() {
+        return descrição;
+    }
  
 }

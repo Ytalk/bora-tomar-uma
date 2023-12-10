@@ -2,11 +2,15 @@ package src;
 
 public class Fermento extends MateriaPrima {
 
-    public Fermento(int peso, double custo, String desc) {
-        super(peso, custo, desc);
+    String descrição;
+
+    public Fermento(int peso, double custo) {
+        super(peso, custo);
+        descrição = "Fermento";
         //TODO Auto-generated constructor stub
     }
     
-
-    
+    public String getDesc() {
+        return descrição;
+    }
 }
