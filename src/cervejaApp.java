@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -22,7 +23,8 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
-
+import javax.swing.event.DocumentListener;
+import javax.swing.event.DocumentEvent;
 
 
 public class cervejaApp extends JFrame {
@@ -33,7 +35,7 @@ public class cervejaApp extends JFrame {
     ImageIcon icone_setas = new ImageIcon("./icons/setas.png");
 
     String[] itens = { "ÁGUA", "MALTE", "LÚPULO", "FERMENTO" };
-    String[] itensCusto = { "10", "20", "15", "25" };
+    String[] itensCusto = { "10.00", "20.00", "15.00", "25.00" };
 
     JTextArea textoQntd_loja = new JTextArea();
 
@@ -80,6 +82,31 @@ public class cervejaApp extends JFrame {
         inicializarComponentes();
     }
 
+    //bloco responsável pela UI LOJA, atualiza o preço total e inicializa duas areas.
+    JTextArea textoPreçoTotal_loja = new JTextArea();
+    JTextArea textoPreço_loja = new JTextArea();
+    private void updatePreçoTotal(){
+
+        String inputPeso = textoQntd_loja.getText().trim();
+
+        try{
+            double pesoInformado = Double.parseDouble(inputPeso);
+            int itemSelecionado = lista_loja.getSelectedIndex();
+            double preço = Double.parseDouble(itensCusto[itemSelecionado]); 
+
+            double resultado = pesoInformado * (preço / 1000);
+
+            DecimalFormat df = new DecimalFormat("#.##");
+            String resultadoFormatado = df.format(resultado);
+
+            textoPreçoTotal_loja.setText(resultadoFormatado);
+        } 
+        catch (NumberFormatException ex){
+            textoPreçoTotal_loja.setText("");//valor inválido limpa o campo
+        }
+    }
+
+
     private void inicializarComponentes() {
         JButton botaoInventario = new JButton("INVENTÁRIO");
         JButton botaonovaReceita = new JButton("RECEITA");
@@ -123,9 +150,11 @@ public class cervejaApp extends JFrame {
         telaLoja.add(textoQntd_loja);
 
         JButton botaoComprar = new JButton("COMPRAR");
-        botaoComprar.setBounds(380, 310, 180, 20);
+        botaoComprar.setBounds(380, 140,96, 40);
         botaoComprar.addActionListener(e -> comprarItem());
         telaLoja.add(botaoComprar);
+
+        addAdicional.setBounds(483,140,90,40);
 
 
         //area dos valores
@@ -138,7 +167,7 @@ public class cervejaApp extends JFrame {
             valores.append(item).append(" $\n");
         }
 
-        JTextArea textoPreço_loja = new JTextArea();
+        
         textoPreço_loja.setEditable(false);
         textoPreço_loja.setBounds(190, 50, 180, 250);
         textoPreço_loja.setBorder(bordaPreta);
@@ -154,20 +183,34 @@ public class cervejaApp extends JFrame {
 
 
         //area total
-        JLabel labelPreçoTotal = new JLabel("PREÇO TOTAL");//aqui será implementado um sistema de cálculo automático
+        JLabel labelPreçoTotal = new JLabel("PREÇO TOTAL");
         labelPreçoTotal.setBounds(430, 10, 90, 50);
         telaLoja.add(labelPreçoTotal);
 
-        JTextArea textoPreçoTotal_loja = new JTextArea();
         textoPreçoTotal_loja.setEditable(false);
-        textoPreçoTotal_loja.setBounds(380, 50, 180, 250);
+        textoPreçoTotal_loja.setBounds(380, 50, 180, 80);
         textoPreçoTotal_loja.setBorder(bordaPreta);
-        //textoPreçoTotal_loja.setText();
         textoPreçoTotal_loja.setFont(new Font("Arial", Font.BOLD, 14));
         telaLoja.add(textoPreçoTotal_loja);
 
-        
-        addAdicional.setBounds(600,200,100,200);
+        textoQntd_loja.getDocument().addDocumentListener(new DocumentListener(){//atualiza preço total
+
+            @Override
+            public void insertUpdate(DocumentEvent e){
+                updatePreçoTotal();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e){
+                updatePreçoTotal();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e){
+                updatePreçoTotal();
+            }
+        });
+
 
         telaLoja.add(addAdicional);
 
@@ -476,4 +519,5 @@ public class cervejaApp extends JFrame {
 
         new cervejaApp();
     }
+
 }

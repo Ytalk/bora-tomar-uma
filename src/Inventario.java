@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import javax.swing.JOptionPane;
 
 import java.util.Iterator;
 
@@ -50,12 +51,14 @@ public class Inventario{
 
         for(MateriaPrima item: materias){
             for(MateriaPrima rótulo: label){
-                if ((item.getPeso() > rótulo.getPeso()) && (item.getDesc().equals(rótulo.getDesc()))){
+                if ((item.getPeso() > rótulo.getPeso()) && (item.getDesc().equalsIgnoreCase(rótulo.getDesc()))){
                     item.setPeso(item.getPeso() - rótulo.getPeso());
                     cervejas.add(cerveja);
+                    return;
                 }
             }
         }
+        JOptionPane.showMessageDialog(null, "Não há matéria-prima o suficiente para essa receita!", "MATÉRIA-PRIMA INSUFICIENTE", JOptionPane.ERROR_MESSAGE);
     }
 
 
