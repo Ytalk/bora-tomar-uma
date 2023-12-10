@@ -61,7 +61,7 @@ public class cervejaApp extends JFrame {
     JPanel tela = new JPanel(layout);
 
    
-    JPanel descCerveja = new JPanel();
+    JList<String> descCerveja;
     JPanel telaLoja = new JPanel();
     JPanel telaEstoque = new JPanel();
     JPanel telaReceita = new JPanel();
@@ -243,8 +243,9 @@ public class cervejaApp extends JFrame {
        lista_estoque.setBorder(bordaPreta);
        
 
-       descCerveja.setLayout(new GridLayout(2,2));
-       descCerveja.setBounds(500,330,100,50);
+       descCerveja = new JList<>();
+       descCerveja.setBorder(bordaPreta);
+       descCerveja.setBounds(250,310,500,100);
        
 
        lista_cervejas = new JList<>();
@@ -398,11 +399,14 @@ public class cervejaApp extends JFrame {
         if (lista_ingredientes.getModel().getSize() > 0) {
             String nomeReceita = JOptionPane.showInputDialog("Informe o nome da receita:");
             Receita receita = new Receita(nomeReceita);
+          
             for (int i = 0; i < lista_ingredientes.getModel().getSize(); i++) {
                 MateriaPrima ingrediente = materia.getElementAt(i);
                 receita.addIngrediente(ingrediente);
+                JOptionPane.showMessageDialog(this, "RECEITA CRIADA!");
             }
             receitas.addElement(receita);
+            materia.clear();
         } else {
             JOptionPane.showMessageDialog(this, "A lista de receita está vazia.");
         }
@@ -491,19 +495,15 @@ public class cervejaApp extends JFrame {
         descCerveja.setVisible(true);
         descCerveja.removeAll();
    
-    if(indexSelecionado != -1){
-        CervejaArtesanal cervejaSelecionada = cervejas.getElementAt(indexSelecionado);
-            
-            descCerveja.add(new JLabel("NOME:"));
-            descCerveja.add(new JLabel(cervejaSelecionada.getNome()));
-
-            descCerveja.add(new JLabel("VALOR:"));
-            descCerveja.add(new JLabel(String.valueOf(cervejaSelecionada.getValor())));
- 
-            repaint();
-            revalidate();
+        if (indexSelecionado != -1) {
+            CervejaArtesanal cervejaSelecionada = cervejas.getElementAt(indexSelecionado);
+        
+            descCerveja.removeAll();
+            descCerveja.setListData(cervejaSelecionada.listarRótulo());
  
         }
+        repaint();
+        revalidate();
     }
 
     public static void main(String[] args) {

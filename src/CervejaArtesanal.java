@@ -30,13 +30,14 @@ public class CervejaArtesanal{
         return valor;
     }
 
-    public String listarRótulo(){
-        StringBuilder resultado = new StringBuilder();
-        
-        for(MateriaPrima item : this.rótulo){
-            resultado.append(item.getDesc()).append("\n");
+    public String[] listarRótulo(){
+ 
+        String [] itens= new String[rótulo.size()];
+      
+        for(int i = 0 ; i < rótulo.size(); i++){
+            itens[i] = rótulo.get(i).toString();
         }
-        return resultado.toString();
+        return itens;
     }
 
     public ArrayList<MateriaPrima> getRótulo(){
