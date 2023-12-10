@@ -5,14 +5,21 @@ public abstract class MateriaPrima {
  private double peso; // 
  private double custo;
  private String desc; // nome do item
+ 
     
  public MateriaPrima(int peso, double custo){
+    
     this.peso = peso;
     this.custo = custo * ( (double) peso / 1000 );//preço em kg para g
+   
+ }
+
+ public void addAdicional(String adicional){
+   desc = desc + " com " + adicional;
  }
 
   public String getDesc() {
-    return "null";
+    return desc;
   }
 
    public double getCusto() {
@@ -29,7 +36,7 @@ public abstract class MateriaPrima {
  
   @Override
   public String toString(){
-    return desc + "  -  " + peso + "g ";
+    return getDesc() + "  -  " + peso + "g ";
    }
 
 }

@@ -7,7 +7,11 @@ public class Fermento extends MateriaPrima {
     public Fermento(int peso, double custo) {
         super(peso, custo);
         descrição = "Fermento";
-        //TODO Auto-generated constructor stub
+        
+    }
+    
+    public void addAdicional(String adicional){
+        descrição = descrição + " com " + adicional;
     }
     
     public String getDesc() {

@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -47,7 +48,7 @@ public class cervejaApp extends JFrame {
 
 
     JList<String> lista_estoque_receita = new JList<>(estoque.listarItens());
-    
+    JCheckBox addAdicional = new JCheckBox("ADICIONAL");
     
     DefaultListModel<CervejaArtesanal> cervejas = new DefaultListModel<>();
     DefaultListModel<MateriaPrima> materia = new DefaultListModel<>();
@@ -72,7 +73,7 @@ public class cervejaApp extends JFrame {
     private void configurarJanela() {
         setVisible(true);
         setSize(800, 500);
-        setTitle("CERVEJARIA");
+        setTitle("PAMPA'S BEER");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -164,6 +165,11 @@ public class cervejaApp extends JFrame {
         //textoPreçoTotal_loja.setText();
         textoPreçoTotal_loja.setFont(new Font("Arial", Font.BOLD, 14));
         telaLoja.add(textoPreçoTotal_loja);
+
+        
+        addAdicional.setBounds(600,200,100,200);
+
+        telaLoja.add(addAdicional);
 
         // UI LOJA // 
 
@@ -376,6 +382,12 @@ public class cervejaApp extends JFrame {
             if (!quantidadeText.isEmpty()) { // Verifica se a string não está vazia
                 int qtd = Integer.parseInt(quantidadeText);
                 MateriaPrima materiaPrima = criarMateriaPrima(itemSelecionado, qtd);
+
+                if(addAdicional.isSelected()){
+                    String adicional = JOptionPane.showInputDialog("Informe o adicional:");
+                    materiaPrima.addAdicional(adicional);
+                }
+             
                 estoque.adicionarItem(materiaPrima);
                 lista_estoque.setListData(estoque.listarItens());
                 lista_estoque_receita.setListData(estoque.listarItens());
@@ -392,6 +404,8 @@ public class cervejaApp extends JFrame {
 
 
     private MateriaPrima criarMateriaPrima(String tipo, int qtd) {
+
+
         switch (tipo) {
             case "ÁGUA":
                 return new Agua(qtd, 10);

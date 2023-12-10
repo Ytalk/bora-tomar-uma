@@ -7,12 +7,13 @@ public class Agua extends MateriaPrima{
     public Agua(int peso, double custo){
         super(peso, custo);
         descrição = "Água";
-        //TODO Auto-generated constructor stub
+        
     }
 
     @Override
     public String getDesc() {
         return descrição;
     }
-    
+
 }
+    

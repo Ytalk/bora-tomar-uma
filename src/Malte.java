@@ -7,7 +7,11 @@ public class Malte extends MateriaPrima {
     public Malte(int peso, double custo) {
         super(peso, custo);
         descrição = "Malte";
-        //TODO Auto-generated constructor stub
+        
+    }
+
+    public void addAdicional(String adicional){
+        descrição = descrição + " com " + adicional;
     }
 
     public String getDesc() {
