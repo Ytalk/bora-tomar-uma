@@ -1,1 +1,1 @@
-package estoque;
+package src;

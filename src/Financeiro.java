@@ -1,7 +1,7 @@
-package estoque;
+package src;
 
 import java.util.NoSuchElementException;
-import java.util.Iterator;
+
 
 public class Financeiro{
     double saldo;

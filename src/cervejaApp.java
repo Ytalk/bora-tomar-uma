@@ -21,9 +21,8 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
-import javax.swing.event.ListSelectionEvent;
 
-import estoque.*;
+
 
 public class cervejaApp extends JFrame {
 
@@ -58,7 +57,7 @@ public class cervejaApp extends JFrame {
     CardLayout layout = new CardLayout(10, 10);
     JPanel tela = new JPanel(layout);
 
-    JPanel itemDetalhes = new JPanel();
+   
     JPanel descCerveja = new JPanel();
     JPanel telaLoja = new JPanel();
     JPanel telaEstoque = new JPanel();
@@ -170,35 +169,38 @@ public class cervejaApp extends JFrame {
 
 
 
-        // UI ESTOQUE //
+       // UI ESTOQUE //
 
-        telaEstoque.setLayout(null);
+       telaEstoque.setLayout(null);
         
-        lista_estoque = new JList<>(estoque.listarItens());
-        lista_estoque.setBounds(500, 150, 250, 150);
-        lista_estoque.addListSelectionListener(e -> exibirDetalhesItemSelecionado());
-        telaEstoque.add(lista_estoque);
+       lista_estoque = new JList<>(estoque.listarItens());
+       lista_estoque.setBounds(250, 30, 500, 250);
+       lista_estoque.setBorder(bordaPreta);
+       
 
-        itemDetalhes.setLayout(new GridLayout(3, 2));
-        itemDetalhes.setBounds(300, 300, 250, 100);
-        telaEstoque.add(itemDetalhes);
+       descCerveja.setLayout(new GridLayout(2,2));
+       descCerveja.setBounds(500,330,100,50);
+       
 
-        descCerveja.setLayout(new GridLayout(2,2));
-        descCerveja.setBounds(150,300,250,100);
-        telaEstoque.add(descCerveja);
+       lista_cervejas = new JList<>();
+       lista_cervejas.setBounds(0, 30, 250, 380);
+       lista_cervejas.addListSelectionListener(e -> exibirDetalhes_cerveja());
+       lista_cervejas.setBorder(bordaPreta);
+       lista_cervejas.setModel(cervejas);
+      
 
-        lista_cervejas = new JList<>();
-        lista_cervejas.setBounds(50, 150, 250, 150);
-        lista_cervejas.addListSelectionListener(e -> exibirDetalhes_cerveja());
-        lista_cervejas.setModel(cervejas);
-        telaEstoque.add(lista_cervejas);
+       JLabel titulo_cervejas = new JLabel("CERVEJAS");
+       titulo_cervejas.setBounds(70, 0, 120, 40);
+       titulo_cervejas.setFont(new Font("Arial", Font.CENTER_BASELINE, 15));
+       
 
-        JLabel titulo_cervejas = new JLabel("CERVEJAS");
-        titulo_cervejas.setBounds(120, 100, 120, 50);
-        titulo_cervejas.setFont(new Font("Arial", Font.CENTER_BASELINE, 15));
-        telaEstoque.add(titulo_cervejas);
+       telaEstoque.add(titulo_cervejas,BorderLayout.CENTER);
+       telaEstoque.add(descCerveja);
+       telaEstoque.add(lista_cervejas,BorderLayout.EAST);
+       telaEstoque.add(lista_estoque);
 
-        // UI ESTOQUE //
+
+       // UI ESTOQUE //
 
         // UI NOVA RECEITA //
 
@@ -301,12 +303,16 @@ public class cervejaApp extends JFrame {
     }
 
     private void adicionarItemReceita() {
-
+         
         int indexSelecionado = lista_estoque_receita.getSelectedIndex();
     
         if (indexSelecionado != -1) {
+            
+            double qtd = Double.parseDouble(JOptionPane.showInputDialog("Informe a quantidade em g do item"));
+ 
             MateriaPrima ingrediente = estoque.getMaterias().get(indexSelecionado);
-    
+            ingrediente.setPeso(qtd);
+             
             // Verifica se o item já está presente na lista de ingredientes
             for (int i = 0; i < lista_ingredientes.getModel().getSize(); i++) {
                 MateriaPrima itemLista = materia.getElementAt(i);
@@ -316,6 +322,10 @@ public class cervejaApp extends JFrame {
                 }
             }
     
+        
+          
+    
+
             materia.addElement(ingrediente);
         }
     }
@@ -396,27 +406,7 @@ public class cervejaApp extends JFrame {
         }
     }
 
-    private void exibirDetalhesItemSelecionado() {
-        int indexSelecionado = lista_estoque.getSelectedIndex();
-        itemDetalhes.setVisible(true);
-        itemDetalhes.removeAll();
-
-        if (indexSelecionado != -1) {
-            MateriaPrima itemSelecionado = estoque.getMaterias().get(indexSelecionado);
-
-            itemDetalhes.add(new JLabel("NOME:"));
-            itemDetalhes.add(new JLabel(itemSelecionado.getDesc()));
-
-            itemDetalhes.add(new JLabel("QUANTIDADE:"));
-            itemDetalhes.add(new JLabel(String.valueOf(itemSelecionado.getPeso())));
-
-            itemDetalhes.add(new JLabel("PREÇO:"));
-            itemDetalhes.add(new JLabel(String.valueOf(itemSelecionado.getCusto())));
-
-            repaint();
-            revalidate();
-        }
-    }
+  
 
     private void exibirDetalhes_cerveja(){
         int indexSelecionado = lista_cervejas.getSelectedIndex();
@@ -425,7 +415,7 @@ public class cervejaApp extends JFrame {
         descCerveja.removeAll();
    
     if(indexSelecionado != -1){
-            CervejaArtesanal cervejaSelecionada = estoque.getCervejas().get(indexSelecionado);
+        CervejaArtesanal cervejaSelecionada = cervejas.getElementAt(indexSelecionado);
             
             descCerveja.add(new JLabel("NOME:"));
             descCerveja.add(new JLabel(cervejaSelecionada.getNome()));

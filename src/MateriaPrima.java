@@ -1,8 +1,8 @@
-package estoque;
+package src;
 
 public abstract class MateriaPrima {
     
- private int peso; // 
+ private double peso; // 
  private double custo;
  private String desc; // nome do item
     
@@ -20,17 +20,17 @@ public abstract class MateriaPrima {
        return custo;
    }
 
-   public int getPeso() {
+   public double getPeso() {
        return peso;
    }
 
-  public void setPeso(int peso){
-    this.peso = peso;
+  public void setPeso(double d){
+    this.peso = d;
   }
  
   @Override
- public String toString(){
-   return "PREÇO: " + custo + "R$" + "PESO: " + peso + "g " + desc;
-  }
+  public String toString(){
+    return desc + "  -  " + peso + "g ";
+   }
 
 }

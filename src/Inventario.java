@@ -1,4 +1,4 @@
-package estoque;
+package src;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +39,7 @@ public class Inventario{
         String[] itens = new String[materias.size()];
 
         for (int i = 0; i < materias.size(); i++) {
-            itens[i] = materias.get(i).getDesc(); 
+            itens[i] = materias.get(i).toString(); 
         }
 
         return itens;

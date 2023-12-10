@@ -1,4 +1,4 @@
-package estoque;
+package src;
 
 public class Agua extends MateriaPrima {
 

@@ -1,4 +1,4 @@
-package estoque;
+package src;
 
 public abstract class Adicional extends MateriaPrima {
 
