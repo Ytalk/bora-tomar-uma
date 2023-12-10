@@ -90,20 +90,24 @@ public class cervejaApp extends JFrame {
         String inputPeso = textoQntd_loja.getText().trim();
 
         try{
-            double pesoInformado = Double.parseDouble(inputPeso);
-            int itemSelecionado = lista_loja.getSelectedIndex();
-            double preço = Double.parseDouble(itensCusto[itemSelecionado]); 
+        double pesoInformado = Double.parseDouble(inputPeso);
+        int itemSelecionado = lista_loja.getSelectedIndex();
 
-            double resultado = pesoInformado * (preço / 1000);
+            if(itemSelecionado >= 0 && pesoInformado > 0){
+                double preço = Double.parseDouble(itensCusto[itemSelecionado]); 
 
-            DecimalFormat df = new DecimalFormat("#.##");
-            String resultadoFormatado = df.format(resultado);
+                double resultado = pesoInformado * (preço / 1000);
 
-            textoPreçoTotal_loja.setText(resultadoFormatado);
-        } 
-        catch (NumberFormatException ex){
+                DecimalFormat df = new DecimalFormat("#.##");
+                String resultadoFormatado = df.format(resultado);
+
+                textoPreçoTotal_loja.setText(resultadoFormatado);
+            }
+        }
+        catch (RuntimeException ex){
             textoPreçoTotal_loja.setText("");//valor inválido limpa o campo
         }
+    
     }
 
 
@@ -150,8 +154,15 @@ public class cervejaApp extends JFrame {
         telaLoja.add(textoQntd_loja);
 
         JButton botaoComprar = new JButton("COMPRAR");
-        botaoComprar.setBounds(380, 140,96, 40);
-        botaoComprar.addActionListener(e -> comprarItem());
+        botaoComprar.setBounds(380, 140, 96, 40);
+        botaoComprar.addActionListener(e -> {
+            try{
+                comprarItem();
+            } 
+            catch(InvalidItemException ex){
+                ex.showMessage();
+            }
+        });
         telaLoja.add(botaoComprar);
 
         addAdicional.setBounds(483,140,90,40);
@@ -192,6 +203,11 @@ public class cervejaApp extends JFrame {
         textoPreçoTotal_loja.setBorder(bordaPreta);
         textoPreçoTotal_loja.setFont(new Font("Arial", Font.BOLD, 14));
         telaLoja.add(textoPreçoTotal_loja);
+
+
+
+
+        
 
         textoQntd_loja.getDocument().addDocumentListener(new DocumentListener(){//atualiza preço total
 
@@ -371,9 +387,6 @@ public class cervejaApp extends JFrame {
                 }
             }
     
-        
-          
-    
 
             materia.addElement(ingrediente);
         }
@@ -414,39 +427,46 @@ public class cervejaApp extends JFrame {
     
       
 
-       private void comprarItem() {
+    private void comprarItem() throws InvalidItemException {
         int indexSelecionado = lista_loja.getSelectedIndex();
-
-
+    
         if (indexSelecionado != -1) {
             String itemSelecionado = itens[indexSelecionado];
             String quantidadeText = textoQntd_loja.getText().trim();
     
-            if (!quantidadeText.isEmpty()) { // Verifica se a string não está vazia
+            if(quantidadeText.isEmpty()){
+                throw new InvalidItemException("A quantidade não foi informada!", "PESO NÃO INFORMADO");
+            } 
+            else if(!quantidadeText.matches("-?\\d+")){
+                throw new InvalidItemException("A quantidade não deve conter letras!", "O PESO NÃO DEVE CONTER LETRAS");
+            } 
+            else if(Integer.parseInt(quantidadeText) <= 0){
+                throw new InvalidItemException("A quantidade deve ser maior que zero!", "O PESO DEVE SER POSITIVO");
+            } 
+            else{
                 int qtd = Integer.parseInt(quantidadeText);
                 MateriaPrima materiaPrima = criarMateriaPrima(itemSelecionado, qtd);
-
-                if(addAdicional.isSelected()){
+    
+                if (addAdicional.isSelected()){
                     String adicional = JOptionPane.showInputDialog("Informe o adicional:");
                     materiaPrima.addAdicional(adicional);
                 }
-             
+    
                 estoque.adicionarItem(materiaPrima);
                 lista_estoque.setListData(estoque.listarItens());
                 lista_estoque_receita.setListData(estoque.listarItens());
-                
+    
                 JOptionPane.showMessageDialog(this, "Você comprou: " + itemSelecionado);
-            } else {
-                JOptionPane.showMessageDialog(this, "Informe a quantidade antes de comprar");
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Selecione um item antes de comprar");
+        } 
+        else{
+            throw new InvalidItemException("O item desejado deve ser selecionado antes de comprar!", "ITEM NÃO INFORMADO");
         }
     }
 
 
 
-    private MateriaPrima criarMateriaPrima(String tipo, int qtd) {
+    private MateriaPrima criarMateriaPrima(String tipo, int qtd){
 
 
         switch (tipo) {
