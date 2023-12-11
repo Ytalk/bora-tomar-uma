@@ -3,6 +3,7 @@ package estoque;
 public class Lupulo extends MateriaPrima{
 
     String descrição;
+    Double peso;
 
     public Lupulo(double peso, double custo) {
         super(peso, custo);

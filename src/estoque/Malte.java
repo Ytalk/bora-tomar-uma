@@ -3,6 +3,7 @@ package estoque;
 public class Malte extends MateriaPrima {
 
     String descrição;
+    Double peso;
 
     public Malte(double peso, double custo) {
         super(peso, custo);

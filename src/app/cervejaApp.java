@@ -401,13 +401,13 @@ public class cervejaApp extends JFrame {
 
     private void abrirEstoque(ActionEvent e) {
         layout.show(tela, "Estoque");
-       
+     
         repaint();
         revalidate();
     }
 
     private void abrirnovaReceita(ActionEvent e) {
-
+      
         layout.show(tela, "Receita");
         repaint();
         revalidate();
@@ -441,10 +441,11 @@ public class cervejaApp extends JFrame {
             } 
             else{
                
-
+                
                 double qtd = Double.parseDouble(tratamento);
                 MateriaPrima ingrediente = estoque.getMaterias().get(indexSelecionado);
                 ingrediente.setPeso(qtd);
+                 
                 
                 // Verifica se o item já está presente na lista de ingredientes
                 for(int i = 0; i < lista_ingredientes.getModel().getSize(); i++){
@@ -488,14 +489,15 @@ public class cervejaApp extends JFrame {
         
         if (lista_receita.getSelectedIndex() != -1) {
             Receita receita = receitas.getElementAt(lista_receita.getSelectedIndex());
-           
-
             try{
                 CervejaArtesanal cerveja = new CervejaArtesanal(receita);
+            
+             //    for(MateriaPrima materia : estoque.getMaterias()){
+               //     estoque.diminuirMateria(materia, materia.getPeso());
+                //}
+
                 cervejas.addElement(cerveja);
 
-                
-                 lista_estoque.setListData(estoque.listarItens());
                 JOptionPane.showMessageDialog(this, "CRIADO!.");
             }
             catch(InvalidItemException ex){

@@ -3,6 +3,7 @@ package estoque;
 public class Fermento extends MateriaPrima {
 
     String descrição;
+    Double peso;
 
     public Fermento(double peso, double custo) {
         super(peso, custo);
