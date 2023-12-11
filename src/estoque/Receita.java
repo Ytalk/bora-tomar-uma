@@ -1,4 +1,4 @@
-package src;
+package estoque;
 
 import java.util.ArrayList;
 

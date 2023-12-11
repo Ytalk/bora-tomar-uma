@@ -1,4 +1,4 @@
-package src;
+package estoque;
 
 public abstract class MateriaPrima {
     

@@ -1,4 +1,8 @@
-package src;
+package app;
+
+import estoque.MateriaPrima;
+import estoque.CervejaArtesanal;
+import estoque.Inventario;
 
 import java.util.NoSuchElementException;
 

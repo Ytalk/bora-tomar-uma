@@ -1,20 +1,21 @@
-package src;
+package estoque;
 
-public class Fermento extends MateriaPrima {
+public class Lupulo extends MateriaPrima{
 
     String descrição;
 
-    public Fermento(int peso, double custo) {
+    public Lupulo(int peso, double custo) {
         super(peso, custo);
-        descrição = "Fermento";
+        descrição = "Lupulo";
         
     }
-    
+
     public void addAdicional(String adicional){
         descrição = descrição + " com " + adicional;
     }
-    
+
     public String getDesc() {
         return descrição;
     }
+ 
 }
