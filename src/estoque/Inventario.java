@@ -6,6 +6,8 @@ import java.util.NoSuchElementException;
 
 import javax.swing.JOptionPane;
 
+import app.InvalidItemException;
+
 import java.util.Iterator;
 
 public class Inventario{
@@ -46,7 +48,7 @@ public class Inventario{
         return itens;
     }
 
-    public void adicionarCerveja(CervejaArtesanal cerveja) {
+    public void adicionarCerveja(CervejaArtesanal cerveja) throws InvalidItemException{
         ArrayList<MateriaPrima> label = cerveja.getRótulo();
         boolean suficiente = true;
     
@@ -65,10 +67,11 @@ public class Inventario{
                 break;
             }
         }
-    
-        if (!suficiente) {
-            JOptionPane.showMessageDialog(null, "Não há matéria-prima o suficiente para essa receita!", "MATÉRIA-PRIMA INSUFICIENTE", JOptionPane.ERROR_MESSAGE);
-        } else {
+
+        if(!suficiente){
+            throw new InvalidItemException("Não há matéria-prima o suficiente para essa receita!", "MATÉRIA-PRIMA INSUFICIENTE");
+        } 
+        else{
             cervejas.add(cerveja);
         }
     }

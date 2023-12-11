@@ -13,6 +13,7 @@ import estoque.CervejaArtesanal;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Dialog;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -297,7 +298,14 @@ public class cervejaApp extends JFrame {
         lista_ingredientes.setModel(materia);
 
         lista_estoque_receita.setBounds(500,150,200,200);
-        lista_estoque_receita.addListSelectionListener(e -> adicionarItemReceita());
+        lista_estoque_receita.addListSelectionListener(e -> {
+            try{
+                adicionarItemReceita();
+            }   
+            catch(InvalidItemException ex){
+                ex.showMessage();
+            }
+        });
          
         telaReceita.add(textReceita);
         telaReceita.add(lista_ingredientes);
@@ -378,29 +386,43 @@ public class cervejaApp extends JFrame {
         revalidate();
     }
 
-    private void adicionarItemReceita() {
+    private void adicionarItemReceita() throws InvalidItemException{
          
         int indexSelecionado = lista_estoque_receita.getSelectedIndex();
     
-        if (indexSelecionado != -1) {
-            
-            double qtd = Double.parseDouble(JOptionPane.showInputDialog("Informe a quantidade em g do item"));
- 
-            MateriaPrima ingrediente = estoque.getMaterias().get(indexSelecionado);
-            ingrediente.setPeso(qtd);
-             
-            // Verifica se o item já está presente na lista de ingredientes
-            for (int i = 0; i < lista_ingredientes.getModel().getSize(); i++) {
-                MateriaPrima itemLista = materia.getElementAt(i);
-    
-                if (ingrediente.equals(itemLista)) {
-                  return;
-                }
-            }
-    
+        if(indexSelecionado != -1){
 
-            materia.addElement(ingrediente);
+            String tratamento = JOptionPane.showInputDialog("Informe a quantidade em g do item");
+
+            if(tratamento.isEmpty()){
+                throw new InvalidItemException("A quantidade não foi informada!", "PESO NÃO INFORMADO");
+            } 
+            else if(!tratamento.matches("-?\\d+")){
+                throw new InvalidItemException("A quantidade não deve conter letras!", "O PESO NÃO DEVE CONTER LETRAS");
+            } 
+            else if(Double.parseDouble(tratamento) <= 0){
+                throw new InvalidItemException("A quantidade deve ser maior que zero!", "O PESO DEVE SER POSITIVO");
+            } 
+            else{
+
+                double qtd = Double.parseDouble(tratamento);
+                MateriaPrima ingrediente = estoque.getMaterias().get(indexSelecionado);
+                ingrediente.setPeso(qtd);
+                
+                // Verifica se o item já está presente na lista de ingredientes
+                for(int i = 0; i < lista_ingredientes.getModel().getSize(); i++){
+                    MateriaPrima itemLista = materia.getElementAt(i);
+        
+                    if(ingrediente.equals(itemLista)){
+                        return;
+                    }
+                }
+
+                materia.addElement(ingrediente);
+            }
+
         }
+    
     }
       
 
@@ -417,8 +439,9 @@ public class cervejaApp extends JFrame {
             }
             receitas.addElement(receita);
             materia.clear();
-        } else {
-            JOptionPane.showMessageDialog(this, "A lista de receita está vazia.");
+        } 
+        else{
+            JOptionPane.showMessageDialog(this, "A lista de receita está vazia.", "receita vazia", JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -426,16 +449,19 @@ public class cervejaApp extends JFrame {
         
         if (lista_receita.getSelectedIndex() != -1) {
             Receita receita = receitas.getElementAt(lista_receita.getSelectedIndex());
-            CervejaArtesanal cerveja = new CervejaArtesanal(receita);
-            cervejas.addElement(cerveja);
-            estoque.adicionarCerveja(cerveja);
-            
-            // Atualiza a lista de cervejas
 
-    
-            JOptionPane.showMessageDialog(this, "CRIADO!.");
-        } else {
-            JOptionPane.showMessageDialog(this, "Selecione uma receita antes de criar a cerveja.");
+            try{
+                CervejaArtesanal cerveja = new CervejaArtesanal(receita);
+                cervejas.addElement(cerveja);
+                estoque.adicionarCerveja(cerveja);
+                JOptionPane.showMessageDialog(this, "CRIADO!.");
+            }
+            catch(InvalidItemException ex){
+                ex.showMessage();
+            }
+        } 
+        else{
+            JOptionPane.showMessageDialog(this, "Selecione uma receita antes de criar a cerveja.", "receita não informada", JOptionPane.WARNING_MESSAGE);
         }
     }
     
