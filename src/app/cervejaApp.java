@@ -12,12 +12,12 @@ import estoque.CervejaArtesanal;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Dialog;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
+
 
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -302,7 +302,6 @@ public class cervejaApp extends JFrame {
         lista_ingredientes.setModel(materia);
         lista_ingredientes.addListSelectionListener(e -> tirarIngrediente());
 
-<<<<<<< HEAD
         lista_estoque_receita.setBounds(500,150,200,200);
         lista_estoque_receita.addListSelectionListener(e -> {
             try{
@@ -312,11 +311,9 @@ public class cervejaApp extends JFrame {
                 ex.showMessage();
             }
         });
-=======
         lista_estoque_receita.setBounds(500,50,200,300);
         lista_estoque_receita.setBorder(bordaPreta);
-        lista_estoque_receita.addListSelectionListener(e -> adicionarItemReceita());
->>>>>>> f631feb1de9ccb3c8f3b7f7cf753888f24b22255
+       
          
         telaReceita.add(textReceita);
         telaReceita.add(textReceita2);
@@ -426,9 +423,11 @@ public class cervejaApp extends JFrame {
          
         int indexSelecionado = lista_estoque_receita.getSelectedIndex();
     
-        if(indexSelecionado != -1){
+       
+           if(indexSelecionado != -1){
 
-            String tratamento = JOptionPane.showInputDialog("Informe a quantidade em g do item");
+          
+            String  tratamento = JOptionPane.showInputDialog("Informe a quantidade em g do item");
 
             if(tratamento.isEmpty()){
                 throw new InvalidItemException("A quantidade não foi informada!", "PESO NÃO INFORMADO");
@@ -440,6 +439,7 @@ public class cervejaApp extends JFrame {
                 throw new InvalidItemException("A quantidade deve ser maior que zero!", "O PESO DEVE SER POSITIVO");
             } 
             else{
+               
 
                 double qtd = Double.parseDouble(tratamento);
                 MateriaPrima ingrediente = estoque.getMaterias().get(indexSelecionado);
@@ -457,7 +457,7 @@ public class cervejaApp extends JFrame {
                 materia.addElement(ingrediente);
             }
 
-        }
+         }
     
     }
       
@@ -473,7 +473,9 @@ public class cervejaApp extends JFrame {
                 receita.addIngrediente(ingrediente);
                 JOptionPane.showMessageDialog(this, "RECEITA CRIADA!");
             }
+            estoque.adicionarReceita(receita);
             receitas.addElement(receita);
+            
             materia.clear();
         } 
         else{
@@ -485,11 +487,14 @@ public class cervejaApp extends JFrame {
         
         if (lista_receita.getSelectedIndex() != -1) {
             Receita receita = receitas.getElementAt(lista_receita.getSelectedIndex());
+           
 
             try{
                 CervejaArtesanal cerveja = new CervejaArtesanal(receita);
                 cervejas.addElement(cerveja);
-                estoque.adicionarCerveja(cerveja);
+
+                
+                 lista_estoque.setListData(estoque.listarItens());
                 JOptionPane.showMessageDialog(this, "CRIADO!.");
             }
             catch(InvalidItemException ex){
@@ -543,7 +548,7 @@ public class cervejaApp extends JFrame {
 
 
 
-    private MateriaPrima criarMateriaPrima(String tipo, int qtd){
+    private MateriaPrima criarMateriaPrima(String tipo, double qtd){
 
 
         switch (tipo) {
@@ -613,8 +618,13 @@ public class cervejaApp extends JFrame {
         }
       }
 
+     
+
     public static void main(String[] args) {
-        /* 
+        
+
+
+        /*
         Inventario invent = new Inventario();
         Agua escolha = new Agua(1000, 10);
         Malte escolha2 = new Malte(1000, 15);
@@ -646,8 +656,8 @@ public class cervejaApp extends JFrame {
         elementoX = invent.listarItens()[1];
         //System.out.println(invent.listarCervejas());
         System.out.println("\n\ndepois:\n" + elemento0 + "\n" + elementoX);//inventário depois de criar cerveja
-                
-*/
+        */
+
         new cervejaApp();
     }
 

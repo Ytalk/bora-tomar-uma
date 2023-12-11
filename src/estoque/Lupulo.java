@@ -4,7 +4,7 @@ public class Lupulo extends MateriaPrima{
 
     String descrição;
 
-    public Lupulo(int peso, double custo) {
+    public Lupulo(double peso, double custo) {
         super(peso, custo);
         descrição = "Lupulo";
         

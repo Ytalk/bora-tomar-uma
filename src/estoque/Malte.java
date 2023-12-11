@@ -4,7 +4,7 @@ public class Malte extends MateriaPrima {
 
     String descrição;
 
-    public Malte(int peso, double custo) {
+    public Malte(double peso, double custo) {
         super(peso, custo);
         descrição = "Malte";
         

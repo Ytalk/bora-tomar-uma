@@ -1,10 +1,9 @@
 package estoque;
 
 import java.util.ArrayList;
-import java.util.List;
+
 import java.util.NoSuchElementException;
 
-import javax.swing.JOptionPane;
 
 import app.InvalidItemException;
 
@@ -34,7 +33,7 @@ public class Inventario{
         }
     }
 
-    public List<MateriaPrima> getMaterias() {
+    public ArrayList<MateriaPrima> getMaterias() {
         return materias;
     }
 
@@ -49,33 +48,28 @@ public class Inventario{
     }
 
     public void adicionarCerveja(CervejaArtesanal cerveja) throws InvalidItemException{
-        ArrayList<MateriaPrima> label = cerveja.getRótulo();
-        boolean suficiente = true;
     
-        for (MateriaPrima rótulo : label) {
-            suficiente = false;
-    
-            for (MateriaPrima item : materias) {
-                if (item.getDesc().equalsIgnoreCase(rótulo.getDesc()) && item.getPeso() >= rótulo.getPeso()) {
-                    item.setPeso(item.getPeso() - rótulo.getPeso());
-                    suficiente = true;
-                    break;
-                }
-            }
-    
-            if (!suficiente) {
-                break;
+         boolean existente = false;
+        for(MateriaPrima itens : materias){
+            if(itens.getDesc().equals(itens.getDesc())){
+                itens.setPeso(itens.getPeso() - itens.getPeso());
+                existente = true;
             }
         }
-
-        if(!suficiente){
-            throw new InvalidItemException("Não há matéria-prima o suficiente para essa receita!", "MATÉRIA-PRIMA INSUFICIENTE");
-        } 
-        else{
+        if(existente == false){
             cervejas.add(cerveja);
         }
     }
 
+    public void diminuirMateria(MateriaPrima item, double peso){
+
+        for (MateriaPrima materiaPrima : materias) {
+            if (materiaPrima.equals(item)) {
+              item.usarMateria(peso);
+              break;
+            }
+          }
+    }
 
 
     public ArrayList<CervejaArtesanal> getCervejas(){
@@ -91,7 +85,7 @@ public class Inventario{
         return itens;
     }
 
-    public void addReceita(Receita receita){
+    public void adicionarReceita(Receita receita){
         receitas.add(receita);
     }
     
@@ -105,8 +99,6 @@ public class Inventario{
 
       
     }
-
-    
 
     public void deletarReceita(String nome){
         Iterator<Receita> iterator = receitas.iterator();

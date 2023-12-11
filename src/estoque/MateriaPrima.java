@@ -7,7 +7,7 @@ public abstract class MateriaPrima {
  private String desc; // nome do item
  
     
- public MateriaPrima(int peso, double custo){
+ public MateriaPrima(double peso, double custo){
     
     this.peso = peso;
     this.custo = custo * ( (double) peso / 1000 );//preço em kg para g
@@ -31,7 +31,11 @@ public abstract class MateriaPrima {
    }
 
   public void setPeso(double d){
-    this.peso = d;
+    peso = d;
+  }
+
+  public void usarMateria(double d){
+    peso = peso - d;
   }
  
   @Override

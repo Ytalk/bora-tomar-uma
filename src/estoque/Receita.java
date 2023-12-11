@@ -43,8 +43,8 @@ public class Receita{
         return ingredientes;
     }
 
-    public int getPeso(){
-        int pesoTotal = 0;
+    public double getPeso(){
+        double pesoTotal = 0;
 
         for(MateriaPrima ingrediente : ingredientes){
             pesoTotal += ingrediente.getPeso();

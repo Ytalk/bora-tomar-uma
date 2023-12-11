@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class CervejaArtesanal{
     private String nome;
-    private int volume; // quantidade de cerveja produziada
+    private double volume; // quantidade de cerveja produziada
     private double valor;
     private ArrayList<MateriaPrima> rótulo;
 
@@ -22,7 +22,7 @@ public class CervejaArtesanal{
         return nome;
     }
 
-    public int getVolume(){
+    public double getVolume(){
         return volume;
     }
 
