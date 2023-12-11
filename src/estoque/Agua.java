@@ -4,10 +4,9 @@ public class Agua extends MateriaPrima{
 
     String descrição;
 
-    public Agua(int peso, double custo){
+    public Agua(double peso, double custo){
         super(peso, custo);
         descrição = "Água";
-        
     }
 
     @Override

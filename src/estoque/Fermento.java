@@ -4,7 +4,7 @@ public class Fermento extends MateriaPrima {
 
     String descrição;
 
-    public Fermento(int peso, double custo) {
+    public Fermento(double peso, double custo) {
         super(peso, custo);
         descrição = "Fermento";
         

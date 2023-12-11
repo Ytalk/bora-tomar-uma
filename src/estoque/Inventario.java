@@ -1,7 +1,7 @@
 package estoque;
 
 import java.util.ArrayList;
-import java.util.List;
+
 import java.util.NoSuchElementException;
 
 import javax.swing.JOptionPane;
@@ -32,9 +32,19 @@ public class Inventario{
         }
     }
 
-    public List<MateriaPrima> getMaterias() {
+    public ArrayList<MateriaPrima> getMaterias() {
         return materias;
     }
+
+    public MateriaPrima getMateriaPrima(String nome){
+        for(MateriaPrima materia: materias){
+            if(materia.getDesc() == nome)
+                return materia;
+        }
+        throw new NoSuchElementException("receita não encontrada com o nome: " + nome);
+    }
+
+   
 
     public String[] listarItens() {
         String[] itens = new String[materias.size()];
@@ -60,6 +70,7 @@ public class Inventario{
         }
         JOptionPane.showMessageDialog(null, "Não há matéria-prima o suficiente para essa receita!", "MATÉRIA-PRIMA INSUFICIENTE", JOptionPane.ERROR_MESSAGE);
     }
+    
 
 
 
@@ -87,12 +98,9 @@ public class Inventario{
         }
         return null;
 
-
-      
     }
 
     
-
     public void deletarReceita(String nome){
         Iterator<Receita> iterator = receitas.iterator();
     

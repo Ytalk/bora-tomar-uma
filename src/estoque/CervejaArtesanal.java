@@ -5,14 +5,14 @@ import java.util.ArrayList;
 
 public class CervejaArtesanal{
     private String nome;
-    private int volume; // quantidade de cerveja produziada
+    private double peso; // quantidade de cerveja produziada
     private double valor;
     private ArrayList<MateriaPrima> rótulo;
 
     public CervejaArtesanal(Receita receita){
         this.nome = receita.getNome();
         this.valor = receita.getCusto() + (receita.getCusto() * 0.25);//margem de lucro de 25%
-        this.volume = receita.getPeso();//forma grosseira de calcular
+        this.peso = receita.getPeso();//forma grosseira de calcular
 
         this.rótulo = new ArrayList<MateriaPrima>();
         this.rótulo = receita.getConteudo();
@@ -22,8 +22,8 @@ public class CervejaArtesanal{
         return nome;
     }
 
-    public int getVolume(){
-        return volume;
+    public double getVolume(){
+        return peso;
     }
 
     public double getValor(){

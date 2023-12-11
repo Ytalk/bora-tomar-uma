@@ -50,13 +50,14 @@ public class Receita{
         return custoDaReceita;
     }
 
-    public String listarReceita(){
-        String receita = "\n======================================================\n\tRECEITA:\t" + nome.toUpperCase() + "\n======================================================\n\n";
-        
-        for(MateriaPrima ingrediente : ingredientes){
-            receita = receita + ingrediente.getPeso() + " gramas de " + ingrediente.getDesc() + "\t-\t" + ingrediente.getCusto() + "\n";
+    public String[] listarIngredientes(){
+ 
+        String [] itens= new String[ingredientes.size()];
+      
+        for(int i = 0 ; i < ingredientes.size(); i++){
+            itens[i] = ingredientes.get(i).toString();
         }
-        return receita;
+        return itens;
     }
 
 
