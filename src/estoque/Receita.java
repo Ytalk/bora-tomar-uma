@@ -12,9 +12,20 @@ public class Receita{
         this.ingredientes = new ArrayList<MateriaPrima>();
     }
 
-    public void addIngrediente(MateriaPrima ingrediente){
-        ingredientes.add(ingrediente);
+
+    public void addIngrediente(MateriaPrima novoIngrediente){
+        boolean existente = false;
+        for(MateriaPrima ingrediente : ingredientes){
+            if(novoIngrediente.getDesc().equals(ingrediente.getDesc())){
+                ingrediente.setPeso(ingrediente.getPeso() + novoIngrediente.getPeso());
+                existente = true;
+            }
+        }
+        if(existente == false){
+            ingredientes.add(novoIngrediente);
+        }
     }
+
 
     public String getNome(){
         return nome;

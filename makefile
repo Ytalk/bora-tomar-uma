@@ -2,7 +2,7 @@ run:
 	java -cp bin/classes app.cervejaApp
 
 
-compile&run:
+crun:
 	javac -d bin/classes src/estoque/*.java src/app/*.java
 	java -cp bin/classes app.cervejaApp
 

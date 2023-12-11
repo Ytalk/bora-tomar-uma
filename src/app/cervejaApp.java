@@ -517,35 +517,39 @@ public class cervejaApp extends JFrame {
     }
 
     public static void main(String[] args) {
-        /*
+        
         Inventario invent = new Inventario();
-        Agua escolha = new Agua(1100, 10);
+        Agua escolha = new Agua(1000, 10);
         Malte escolha2 = new Malte(1000, 15);
         Agua escolha3 = new Agua(800, 10);
+        Agua escolha4 = new Agua(200, 10);
 
-        System.out.println(escolha.getDesc() + "\n" + escolha.getCusto() + "$\n" + escolha.getPeso());//mostrar info dos ingredientes
+                          //System.out.println(escolha.getDesc() + "\n" + escolha.getCusto() + "$\n" + escolha.getPeso());//mostrar info do ingrediente
 
         Receita rec = new Receita("nome da receita");//manipulando receita
         rec.addIngrediente(escolha);
         rec.addIngrediente(escolha2);
-        System.err.println(rec.listarReceita());
-        System.out.println("\n\ncusto rec: " + rec.getCusto() + "\npeso rec: " + rec.getPeso());
+        System.err.println(rec.listarReceita());//lista
+        rec.addIngrediente(escolha3);
+        System.out.println(rec.listarReceita());//lista depois de add
+        System.out.println("\n\ncusto rec: " + rec.getCusto() + "\npeso rec: " + rec.getPeso());//info da receita
 
         CervejaArtesanal cerv = new CervejaArtesanal(rec);
 
         invent.adicionarItem(escolha3);
         invent.adicionarItem(escolha);
         invent.adicionarItem(escolha2);
+        invent.adicionarItem(escolha4);
         String elemento0 = invent.listarItens()[0];
-        System.out.println(elemento0);//inventário antes de criar cerveja
+        String elementoX = invent.listarItens()[1];
+        System.out.println("antes da cerveja:\n" + elemento0 + "\n" + elementoX);//inventário antes de criar cerveja
 
         invent.adicionarCerveja(cerv);
         elemento0 = invent.listarItens()[0];
+        elementoX = invent.listarItens()[1];
         //System.out.println(invent.listarCervejas());
-        System.out.println(elemento0);//inventário depois de criar cerveja
-        
-        null por falta de cast, polimorfismo em materias no inventario não informa o que é a matéria prima, e por padrão trata como matéria prima. 
-        */
+        System.out.println("\n\ndepois:\n" + elemento0 + "\n" + elementoX);//inventário depois de criar cerveja
+                
 
         new cervejaApp();
     }

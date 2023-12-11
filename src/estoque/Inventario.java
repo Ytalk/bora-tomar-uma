@@ -46,19 +46,31 @@ public class Inventario{
         return itens;
     }
 
-    public void adicionarCerveja(CervejaArtesanal cerveja){
+    public void adicionarCerveja(CervejaArtesanal cerveja) {
         ArrayList<MateriaPrima> label = cerveja.getRótulo();
-
-        for(MateriaPrima item: materias){
-            for(MateriaPrima rótulo: label){
-                if ((item.getPeso() > rótulo.getPeso()) && (item.getDesc().equalsIgnoreCase(rótulo.getDesc()))){
+        boolean suficiente = true;
+    
+        for (MateriaPrima rótulo : label) {
+            suficiente = false;
+    
+            for (MateriaPrima item : materias) {
+                if (item.getDesc().equalsIgnoreCase(rótulo.getDesc()) && item.getPeso() >= rótulo.getPeso()) {
                     item.setPeso(item.getPeso() - rótulo.getPeso());
-                    cervejas.add(cerveja);
-                    return;
+                    suficiente = true;
+                    break;
                 }
             }
+    
+            if (!suficiente) {
+                break;
+            }
         }
-        JOptionPane.showMessageDialog(null, "Não há matéria-prima o suficiente para essa receita!", "MATÉRIA-PRIMA INSUFICIENTE", JOptionPane.ERROR_MESSAGE);
+    
+        if (!suficiente) {
+            JOptionPane.showMessageDialog(null, "Não há matéria-prima o suficiente para essa receita!", "MATÉRIA-PRIMA INSUFICIENTE", JOptionPane.ERROR_MESSAGE);
+        } else {
+            cervejas.add(cerveja);
+        }
     }
 
 
