@@ -302,7 +302,8 @@ public class cervejaApp extends JFrame {
         lista_ingredientes.setModel(materia);
         lista_ingredientes.addListSelectionListener(e -> tirarIngrediente());
 
-        lista_estoque_receita.setBounds(500,150,200,200);
+        lista_estoque_receita.setBounds(500,50,200,300);
+        lista_estoque_receita.setBorder(bordaPreta);
         lista_estoque_receita.addListSelectionListener(e -> {
             try{
                 adicionarItemReceita();
