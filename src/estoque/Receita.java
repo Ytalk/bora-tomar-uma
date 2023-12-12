@@ -71,6 +71,15 @@ public class Receita{
         return itens;
     }
 
+    public String listarReceita2(){
+        String receita = "\n======================================================\n\tRECEITA:\t" + nome.toUpperCase() + "\n======================================================\n\n";
+        
+        for(MateriaPrima ingrediente : ingredientes){
+            receita = receita + ingrediente.getPeso() + " gramas de " + ingrediente.getDesc() + "\t-\t" + ingrediente.getCusto() + "\n";
+        }
+        return receita;
+    }
+
 
     @Override
     public String toString(){

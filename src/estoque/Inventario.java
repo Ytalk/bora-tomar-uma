@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import java.util.NoSuchElementException;
 
-
 import app.InvalidItemException;
 
 import java.util.Iterator;
@@ -37,6 +36,15 @@ public class Inventario{
         return materias;
     }
 
+    public MateriaPrima buscarMateriaPrima(String desc){
+        for(MateriaPrima item : materias){
+            if(item.getDesc().equals(desc)){
+                return item;
+            }
+        }
+        return null;
+    }
+
     public String[] listarItens() {
         String[] itens = new String[materias.size()];
 
@@ -46,18 +54,24 @@ public class Inventario{
 
         return itens;
     }
-
     public void adicionarCerveja(CervejaArtesanal cerveja) throws InvalidItemException{
+        ArrayList<MateriaPrima> label = cerveja.getRótulo();
+        boolean suficiente = true;
     
-         boolean existente = false;
-        for(MateriaPrima itens : materias){
-            if(itens.getDesc().equals(itens.getDesc())){
-                itens.setPeso(itens.getPeso() - itens.getPeso());
-                existente = true;
+        for (MateriaPrima rótulo : label) {
+            suficiente = false;
+    
+            for (MateriaPrima item : materias) {
+                if (item.getDesc().equalsIgnoreCase(rótulo.getDesc()) && item.getPeso() >= rótulo.getPeso()) {
+                    item.setPeso(item.getPeso() - rótulo.getPeso());
+                    suficiente = true;
+                    break;
+                }
             }
-        }
-        if(existente == false){
-            cervejas.add(cerveja);
+    
+            if (!suficiente) {
+                break;
+            }
         }
     }
 
@@ -89,17 +103,6 @@ public class Inventario{
         receitas.add(receita);
     }
     
-      public Receita getReceitas() {
-
-        for(Receita receita : receitas){
-        return receita;
-        }
-        return null;
-
-
-      
-    }
-
     public void deletarReceita(String nome){
         Iterator<Receita> iterator = receitas.iterator();
     

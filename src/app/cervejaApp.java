@@ -18,7 +18,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 
-
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -49,7 +48,6 @@ public class cervejaApp extends JFrame {
 
     JTextArea textoQntd_loja = new JTextArea();
 
-
     JList<String> lista_loja = new JList<>(itens);
     JList<String> lista_estoque;
     JList<String> descReceita;
@@ -65,6 +63,7 @@ public class cervejaApp extends JFrame {
     DefaultListModel<CervejaArtesanal> cervejas = new DefaultListModel<>();
     DefaultListModel<MateriaPrima> materia = new DefaultListModel<>();
     DefaultListModel<Receita> receitas = new DefaultListModel<>();
+
     
     JCheckBox addAdicional = new JCheckBox("ADICIONAL");
 
@@ -88,7 +87,6 @@ public class cervejaApp extends JFrame {
         setTitle("PAMPA'S BEER");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-
         inicializarComponentes();
     }
 
@@ -120,7 +118,6 @@ public class cervejaApp extends JFrame {
     
     }
 
-
     private void inicializarComponentes() {
         JButton botaoInventario = new JButton("INVENTÁRIO");
         JButton botaonovaReceita = new JButton("RECEITA");
@@ -142,8 +139,6 @@ public class cervejaApp extends JFrame {
         configurarBotao(botaoInventario, this::abrirEstoque);
         configurarBotao(botaonovaReceita, this::abrirnovaReceita);
         configurarBotao(botaonovaCerveja, this::abrirCerveja);
-
-
 
         // UI LOJA // 
 
@@ -188,7 +183,6 @@ public class cervejaApp extends JFrame {
             valores.append(item).append(" $\n");
         }
 
-        
         textoPreço_loja.setEditable(false);
         textoPreço_loja.setBounds(190, 50, 180, 250);
         textoPreço_loja.setBorder(bordaPreta);
@@ -213,10 +207,6 @@ public class cervejaApp extends JFrame {
         textoPreçoTotal_loja.setBorder(bordaPreta);
         textoPreçoTotal_loja.setFont(new Font("Arial", Font.BOLD, 14));
         telaLoja.add(textoPreçoTotal_loja);
-
-
-
-
         
 
         textoQntd_loja.getDocument().addDocumentListener(new DocumentListener(){//atualiza preço total
@@ -237,12 +227,9 @@ public class cervejaApp extends JFrame {
             }
         });
 
-
         telaLoja.add(addAdicional);
 
         // UI LOJA // 
-
-
 
        // UI ESTOQUE //
 
@@ -251,20 +238,17 @@ public class cervejaApp extends JFrame {
        lista_estoque = new JList<>(estoque.listarItens());
        lista_estoque.setBounds(250, 30, 500, 250);
        lista_estoque.setBorder(bordaPreta);
-       
-
+    
        descCerveja = new JList<>();
        descCerveja.setBorder(bordaPreta);
        descCerveja.setBounds(250,310,500,100);
        
-
        lista_cervejas = new JList<>();
        lista_cervejas.setBounds(0, 30, 250, 380);
        lista_cervejas.addListSelectionListener(e -> exibirDetalhes_cerveja());
        lista_cervejas.setBorder(bordaPreta);
        lista_cervejas.setModel(cervejas);
       
-
        JLabel titulo_cervejas = new JLabel("CERVEJAS");
        titulo_cervejas.setBounds(70, 0, 120, 40);
        titulo_cervejas.setFont(new Font("Arial", Font.CENTER_BASELINE, 15));
@@ -274,7 +258,6 @@ public class cervejaApp extends JFrame {
        telaEstoque.add(descCerveja);
        telaEstoque.add(lista_cervejas,BorderLayout.EAST);
        telaEstoque.add(lista_estoque);
-
 
        // UI ESTOQUE //
 
@@ -322,10 +305,7 @@ public class cervejaApp extends JFrame {
         telaReceita.add(lista_estoque_receita);
         telaReceita.add(criar_receita);
     
-
         // UI NOVA RECEITA //
-
-
 
         //UI CERVEJA // 
 
@@ -364,7 +344,6 @@ public class cervejaApp extends JFrame {
         lista_estoque_cerveja.setBounds(500,50,200,250);
         lista_estoque_cerveja.setBorder(bordaPreta);
         
-         
         telaCerveja.add(textCerveja);
         telaCerveja.add(textCerveja2);
         telaCerveja.add(lista_receita);
@@ -441,11 +420,12 @@ public class cervejaApp extends JFrame {
             } 
             else{
                
+               // ArrayList<MateriaPrima> itens = new ArrayList<>(estoque.getMaterias());
                 
                 double qtd = Double.parseDouble(tratamento);
                 MateriaPrima ingrediente = estoque.getMaterias().get(indexSelecionado);
                 ingrediente.setPeso(qtd);
-                 
+             
                 
                 // Verifica se o item já está presente na lista de ingredientes
                 for(int i = 0; i < lista_ingredientes.getModel().getSize(); i++){
@@ -462,7 +442,6 @@ public class cervejaApp extends JFrame {
          }
     
     }
-      
 
     private void criarReceita() {
 
@@ -473,8 +452,8 @@ public class cervejaApp extends JFrame {
             for (int i = 0; i < lista_ingredientes.getModel().getSize(); i++) {
                 MateriaPrima ingrediente = materia.getElementAt(i);
                 receita.addIngrediente(ingrediente);
-                JOptionPane.showMessageDialog(this, "RECEITA CRIADA!");
             }
+            JOptionPane.showMessageDialog(this, "RECEITA CRIADA!");
             estoque.adicionarReceita(receita);
             receitas.addElement(receita);
             
@@ -508,8 +487,6 @@ public class cervejaApp extends JFrame {
             JOptionPane.showMessageDialog(this, "Selecione uma receita antes de criar a cerveja.", "receita não informada", JOptionPane.WARNING_MESSAGE);
         }
     }
-    
-      
 
     private void comprarItem() throws InvalidItemException {
         int indexSelecionado = lista_loja.getSelectedIndex();
@@ -549,8 +526,6 @@ public class cervejaApp extends JFrame {
         }
     }
 
-
-
     private MateriaPrima criarMateriaPrima(String tipo, double qtd){
 
 
@@ -567,9 +542,7 @@ public class cervejaApp extends JFrame {
                 throw new IllegalArgumentException("Tipo de matéria-prima desconhecido: " + tipo);
         }
     }
-
   
-
     private void exibirDetalhes_cerveja(){
         int indexSelecionado = lista_cervejas.getSelectedIndex();
    
@@ -621,47 +594,11 @@ public class cervejaApp extends JFrame {
         }
       }
 
-     
 
     public static void main(String[] args) {
-        
-
-
-        /*
-        Inventario invent = new Inventario();
-        Agua escolha = new Agua(1000, 10);
-        Malte escolha2 = new Malte(1000, 15);
-        Agua escolha3 = new Agua(800, 10);
-        Agua escolha4 = new Agua(200, 10);
-
-                          //System.out.println(escolha.getDesc() + "\n" + escolha.getCusto() + "$\n" + escolha.getPeso());//mostrar info do ingrediente
-
-        Receita rec = new Receita("nome da receita");//manipulando receita
-        rec.addIngrediente(escolha);
-        rec.addIngrediente(escolha2);
-        System.err.println(rec.listarReceita());//lista
-        rec.addIngrediente(escolha3);
-        System.out.println(rec.listarReceita());//lista depois de add
-        System.out.println("\n\ncusto rec: " + rec.getCusto() + "\npeso rec: " + rec.getPeso());//info da receita
-
-        CervejaArtesanal cerv = new CervejaArtesanal(rec);
-
-        invent.adicionarItem(escolha3);
-        invent.adicionarItem(escolha);
-        invent.adicionarItem(escolha2);
-        invent.adicionarItem(escolha4);
-        String elemento0 = invent.listarItens()[0];
-        String elementoX = invent.listarItens()[1];
-        System.out.println("antes da cerveja:\n" + elemento0 + "\n" + elementoX);//inventário antes de criar cerveja
-
-        invent.adicionarCerveja(cerv);
-        elemento0 = invent.listarItens()[0];
-        elementoX = invent.listarItens()[1];
-        //System.out.println(invent.listarCervejas());
-        System.out.println("\n\ndepois:\n" + elemento0 + "\n" + elementoX);//inventário depois de criar cerveja
-        */
-
+    
         new cervejaApp();
+     
     }
 
 }
