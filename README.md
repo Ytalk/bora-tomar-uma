@@ -18,8 +18,8 @@ Há alguns requisitos para usar o programa:
 - `MAKE` : **Opcional** te-lo no ambiente do sistema, somente caso queira usar o makefile. Para utiliza-lo basta digitar "make crun" para compilar e dar run, "make run" para dar run, "make del" e "make rm" para deletar as classes no Windowns ou Linux. Contudo, é possivel compilar com "javac -d bin/classes src/estoque/*.java src/app/*.java" e dar run com "java -cp bin/classes app.cervejaApp" (**indispensável estar no path principal "bora-tomar-uma" para executar esses comandos com êxito**).
 
 
-## Requisitos
-
 
 
 ## Feito por
+-`Rafael Oliva Soares`
+-`Dérick Maciel Muniz`

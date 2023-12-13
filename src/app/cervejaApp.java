@@ -409,9 +409,15 @@ public class cervejaApp extends JFrame {
           
             String  tratamento = JOptionPane.showInputDialog("Informe a quantidade em g do item");
 
-            if(tratamento.isEmpty()){
-                throw new InvalidItemException("A quantidade não foi informada!", "PESO NÃO INFORMADO");
+            if(tratamento == null){
+            throw new InvalidItemException("OPERAÇÃO CANCELADA!", "CANCELADO");
+            }
+
+           else if(tratamento.isEmpty()){
+            throw new InvalidItemException("A quantidade não foi informada!", "PESO NÃO INFORMADO");
             } 
+
+            
             else if(!tratamento.matches("-?\\d+")){
                 throw new InvalidItemException("A quantidade não deve conter letras!", "O PESO NÃO DEVE CONTER LETRAS");
             } 
